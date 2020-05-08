@@ -4,8 +4,8 @@ const Route = require('../models/Route');
 const { 
   RouteType,
   QuoteInputType
- } = require('./types')
-
+ } = require('./types');
+ 
 const {
     GraphQLObjectType,
     GraphQLString,
