@@ -1,5 +1,18 @@
 const mongoose = require('mongoose');
 
+const validitySubSchema = {
+  startDate: Date, endDate: Date
+}
+
+const priceSubSchema = {
+  oceanFreight: [{
+    containerType: String,
+    price: mongoose.Decimal128,
+  }], 
+  docFee: mongoose.Decimal128,
+  adminFee: mongoose.Decimal128
+}
+
 const QuoteSchema = new mongoose.Schema({
   validity: {
     type: validitySubSchema,
@@ -14,19 +27,6 @@ const QuoteSchema = new mongoose.Schema({
     required: true,
   },
 });
-
-const validitySubSchema = {
-  startDate: Date, endDate: Date
-}
-
-const priceSubSchema = {
-  oceanFreight: {
-    type: Map,
-    of: Schema.Types.Decimal128
-  }, 
-  docFee: Schema.Types.Decimal128,
-  adminFee: Schema.Types.Decimal128
-}
 
 const Quote = mongoose.model('Quote', QuoteSchema);
 
