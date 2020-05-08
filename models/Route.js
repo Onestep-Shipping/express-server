@@ -1,16 +1,20 @@
 const mongoose = require('mongoose');
 
 const RouteSchema = new mongoose.Schema({
+  routeId: {
+    type: String,
+    required: true,
+  },
   quoteHistory: [{
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Quote'
   }],
   startLocation: {
-    type: portSubSchema,
+    type: String,
     required: true,
   },
   endLocation: {
-    type: portSubSchema,
+    type: String,
     required: true,
   },
   carrier: {
@@ -18,10 +22,6 @@ const RouteSchema = new mongoose.Schema({
     required: true,
   },
 });
-
-const portSubSchema = {
-  name: String, code: String
-}
 
 const Route = mongoose.model('Route', RouteSchema);
 
