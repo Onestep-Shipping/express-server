@@ -1,6 +1,6 @@
 const graphql = require('graphql');
 
-const Route = require('../models/Route');
+const Route = require('../../models/Route');
 
 const {
   GraphQLInputObjectType,
