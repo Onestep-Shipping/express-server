@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const graphqlHTTP = require('express-graphql');
+const { buildSchema } = require('graphql');
 
 const app = express();
 
@@ -14,10 +16,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-// Bodyparser
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-
 // DB Config
 const uri = process.env.DB_URI;
 
@@ -25,6 +23,30 @@ const uri = process.env.DB_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
         .then(() => console.log("MongoDB connected!"))
         .catch(err => console.log(err));
+
+// GraphQL
+// Construct a schema, using GraphQL schema language
+const schema = buildSchema(`
+  type Query {
+    hello(name: String!): String
+  }
+`);
+
+// The root provides a resolver function for each API endpoint
+const root = {
+  hello: ({ name }) => {
+    return 'Hello ' + name;
+  },
+};
+
+// Bodyparser
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use('/graphql', graphqlHTTP({
+  schema: schema,
+  rootValue: root,
+  graphiql: true,
+}));
 
 const PORT = process.env.PORT || 5000;
 
