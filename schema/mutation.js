@@ -7,17 +7,17 @@ const {
   QuoteInputType,
   ValidityInputType,
   FeeInputType,
-} = require('./types/types.js');
+} = require('./types/index.js');
 
 const {
-    GraphQLObjectType,
-    GraphQLString,
-    GraphQLBoolean,
-    GraphQLSchema,
-    GraphQLID,
-    GraphQLFloat,
-    GraphQLList,
-    GraphQLNonNull
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLBoolean,
+  GraphQLSchema,
+  GraphQLID,
+  GraphQLFloat,
+  GraphQLList,
+  GraphQLNonNull
 } = graphql;
 
 const Mutation = new GraphQLObjectType({
