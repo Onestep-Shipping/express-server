@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const AddressSubschema = require('./AddressSubschema');
 
 const CompanySchema = new mongoose.Schema({
   name: {
@@ -6,7 +7,7 @@ const CompanySchema = new mongoose.Schema({
     required: true,
   },
   address: {
-    type: addressSubSchema,
+    type: AddressSubschema,
     required: true,
   },
   phone: {
@@ -27,10 +28,6 @@ const CompanySchema = new mongoose.Schema({
     unique: true,
     trim: true,
   },
-  created: {
-    type: Date,
-    default: Date.now,
-  },
   shipments: [{
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Shipment'
@@ -38,10 +35,6 @@ const CompanySchema = new mongoose.Schema({
 }, {
   timestamps: true,
 });
-
-const addressSubSchema = {
-  street: String, city: String, country: String
-}
 
 const personSubSchema = {
   name: String, position: String

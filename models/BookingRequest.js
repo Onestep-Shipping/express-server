@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const BookingRequestSchema = new mongoose.Schema({
-  created: {
-    type: Date,
-    default: Date.now
-  },
   commodity: {
     type: String,
     required: true,
@@ -19,6 +15,8 @@ const BookingRequestSchema = new mongoose.Schema({
   }],
   paymentTerm: String,
   autoFilling: Boolean
+}, {
+  timestamps: true
 });
 
 const BookingRequest = mongoose.model('BookingRequest', BookingRequestSchema);

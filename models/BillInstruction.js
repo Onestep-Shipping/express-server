@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const BillInstructionSchema = new mongoose.Schema({
-  created: {
-    type: Date,
-    default: Date.now
-  },
   shipper: {
     type: String,
     required: true,
@@ -41,6 +37,8 @@ const BillInstructionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+}, {
+  timestamps: true
 });
 
 const containerInfoSubSchema = {

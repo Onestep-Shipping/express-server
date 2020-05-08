@@ -5,7 +5,7 @@ const ShipmentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Schedule'
   },
-  by: {
+  bookedBy: {
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Company'
   }
@@ -14,8 +14,10 @@ const ShipmentSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId, 
       ref: 'BookingRequest'
     },
-    received: Number,
-    pdf: String,
+    confirmation: {
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'BookingConfirmation'
+    }
     status: String,
   },
   billInstruction: {
@@ -27,7 +29,10 @@ const ShipmentSchema = new mongoose.Schema({
     status: String,
   },
   invoice: {
-    pdf: String,
+    confirmation: {
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'Invoice'
+    }
     status: String,
   },
   finance: {
