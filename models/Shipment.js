@@ -14,6 +14,7 @@ const ShipmentSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId, 
       ref: 'BookingRequest'
     },
+    received: Number,
     pdf: String,
     status: String,
   },
