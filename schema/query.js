@@ -26,22 +26,26 @@ const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
     route: {
-      type: new GraphQLList(RouteType),
+      type: RouteType,
       args: {
         routeId: {
           type: new GraphQLNonNull(GraphQLString)
         },
+        carrier: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
       },
       resolve(parent, args) {
-        return Route.find({ 
-          routeId: args.routeId 
+        return Route.findOne({ 
+          routeId: args.routeId,
+          carrier: args.carrier
         });
       }
     },
     routes: {
       type: new GraphQLList(RouteType),
       resolve(parent, args) {
-        return Route.find({});
+        return Route.find({}).populate('quoteHistory');
       }
     },
     quotes: {
@@ -53,7 +57,9 @@ const RootQuery = new GraphQLObjectType({
     schedules: {
       type: new GraphQLList(ScheduleType),
       resolve(parent, args) {
-        return Schedule.find({});
+        return Schedule.find({})
+          .populate('route')
+          .sort({transshipment: 1, startDate: 1});
       }
     },
   }

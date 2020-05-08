@@ -16,9 +16,15 @@ const {
   GraphQLSchema,
   GraphQLID,
   GraphQLFloat,
+  GraphQLInt,
   GraphQLList,
   GraphQLNonNull
 } = graphql;
+
+const {
+  GraphQLDate,
+  GraphQLDateTime
+} = require('graphql-iso-date');
 
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
