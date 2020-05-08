@@ -20,10 +20,10 @@ const validitySubSchema = {
 }
 
 const priceSubSchema = {
-  oceanFreight: {
-    type: Map,
-    of: Schema.Types.Decimal128
-  }, 
+  oceanFreight: [{
+    containerType: String,
+    price: Schema.Types.Decimal128,
+  }], 
   docFee: Schema.Types.Decimal128,
   adminFee: Schema.Types.Decimal128
 }

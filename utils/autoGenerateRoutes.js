@@ -129,7 +129,7 @@ function onInsert(err, docs) {
   if (err) {
       // TODO: handle error
   } else {
-      console.info('%d potatoes were successfully stored.', docs.length);
+      console.info('%d routes were successfully stored.', docs.length);
   }
 }
 

@@ -13,10 +13,10 @@ const BookingRequestSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  containers: {
-    type: Map,
-    of: Number
-  },
+  containers: [{
+    containerType: String,
+    quantity: Number,
+  }],
   paymentTerm: String,
   autoFilling: Boolean
 });
