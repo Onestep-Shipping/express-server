@@ -1,9 +1,14 @@
 const graphql = require('graphql');
 
 const Route = require('../models/Route');
+const Quote = require('../models/Quote');
+
 const { 
   RouteType,
-  QuoteInputType
+  QuoteType,
+  QuoteInputType,
+  ValidityInputType,
+  FeeInputType,
  } = require('./types');
  
 const {
@@ -26,40 +31,42 @@ const RootQuery = new GraphQLObjectType({
         return Route.find({});
       }
     },
+    quotes: {
+      type: new GraphQLList(QuoteType),
+      resolve(parent, args) {
+        return Quote.find({});
+      }
+    },
   }
 });
 
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    addRoute: {
-      type: RouteType,
+    addQuote: {
+      type: QuoteType,
       args: {
-          routeId: {
-            type: new GraphQLNonNull(GraphQLString)
+          validity: {
+            type: new GraphQLNonNull(ValidityInputType)
           },
-          quoteHistory: {
-            type: new GraphQLList(QuoteInputType)
+          buying: {
+            type: new GraphQLNonNull(FeeInputType)
           },
-          startLocation: {
-            type: new GraphQLNonNull(GraphQLString)
+          selling: {
+            type: new GraphQLNonNull(FeeInputType)
           },
-          endLocation: {
-            type: new GraphQLNonNull(GraphQLString)
+          except: {
+            type: GraphQLString
           },
-          carrier: {
-            type: new GraphQLNonNull(GraphQLString)
-          }
       },
       resolve(parent, args) {
-          let route = new Route({
-              routeId: args.routeId,
-              quoteHistory: args.quoteHistory,
-              startLocation: args.startLocation,
-              endLocation: args.endLocation,
-              carrier: args.carrier,
-          });
-          return route.save();
+        let quote = new Quote({
+          validity: args.validity,
+          buying: args.buying,
+          selling: args.selling,
+          except: args.except,
+        });
+        return quote.save();
       }
     },
   }

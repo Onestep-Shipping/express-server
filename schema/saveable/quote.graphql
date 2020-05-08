@@ -1,0 +1,85 @@
+query {
+  quotes {
+    validity {
+      startDate, endDate
+    }, 
+    buying {
+      oceanFreight {
+        containerType,
+        price
+      }, 
+      docFee, adminFee
+    }, 
+    selling {
+      oceanFreight {
+        containerType,
+        price
+      },
+      docFee, adminFee
+    },
+  }
+}
+
+mutation {
+  addQuote(
+    validity: {
+      startDate: "2020-05-01",
+      endDate: "2020-05-31"
+    },
+    buying: {
+      oceanFreight: [
+        {
+          containerType: "20' Dry",
+          price: 750
+        },
+        {
+          containerType: "40' Dry",
+          price: 1000
+        },
+        {
+          containerType: "40'HC Dry",
+          price: 1200
+        },
+      ],
+      docFee: 80,
+      adminFee: 0
+    },
+    selling: {
+      oceanFreight: [
+        {
+          containerType: "20' Dry",
+          price: 950
+        },
+        {
+          containerType: "40' Dry",
+          price: 1200
+        },
+        {
+          containerType: "40'HC Dry",
+          price: 1500
+        },
+      ],
+      docFee: 100,
+      adminFee: 30
+    },
+    except: "Garment, Waste, Agricural Products"
+  ) {
+    validity {
+      startDate, endDate
+    }, 
+    buying {
+      oceanFreight {
+        containerType,
+        price
+      }, 
+      docFee, adminFee
+    }, 
+    selling {
+      oceanFreight {
+        containerType,
+        price
+      },
+      docFee, adminFee
+    },
+  }
+}
