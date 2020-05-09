@@ -4,12 +4,14 @@ const Route = require('../models/Route');
 const Quote = require('../models/Quote');
 const Schedule = require('../models/Schedule');
 const Shipment = require('../models/Shipment');
+const Company = require('../models/Company');
 
 const { 
   RouteType,
   QuoteType,
   ScheduleType,
   ShipmentType,
+  CompanyType
 } = require('./types/index.js');
 
 const {
@@ -65,6 +67,12 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(ShipmentType),
       resolve(parent, args) {
         return Shipment.find({});
+      }
+    },
+    companies: {
+      type: new GraphQLList(CompanyType),
+      resolve(parent, args) {
+        return Company.find({});
       }
     },
     schedule: {

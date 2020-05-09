@@ -3,7 +3,7 @@ const QuoteType = require('./QuoteType.js');
 const ScheduleType = require('./ScheduleType.js');
 const BookingRequestType = require('./BookingRequestType.js');
 const ShipmentType = require('./ShipmentType.js');
-
+const CompanyType = require('./CompanyType.js');
 const {
   QuoteInputType,
   ValidityInputType,
@@ -19,5 +19,6 @@ module.exports = {
   ValidityInputType,
   FeeInputType,
 
-  ShipmentType
+  ShipmentType,
+  CompanyType,
 }

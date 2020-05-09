@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const AddressSubschema = require('./AddressSubschema');
 
+const personSubSchema = {
+  name: String, position: String
+}
+
 const CompanySchema = new mongoose.Schema({
   name: {
     type: String,
@@ -21,7 +25,7 @@ const CompanySchema = new mongoose.Schema({
   personInCharge: {
     type: personSubSchema,
     required: true,
-  }
+  },
   email: {
     type: String,
     required: true,
@@ -35,10 +39,6 @@ const CompanySchema = new mongoose.Schema({
 }, {
   timestamps: true,
 });
-
-const personSubSchema = {
-  name: String, position: String
-}
 
 const Company = mongoose.model('Company', CompanySchema);
 
