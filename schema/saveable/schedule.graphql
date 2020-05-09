@@ -1,0 +1,54 @@
+query {
+  schedule(
+    routeId: "CAVAN-SGSIN",
+    carrier: "ONE",
+    startDate: "2020-07-01",
+    endDate: "2020-07-30"
+  ) {
+    route {
+      startLocation, endLocation, carrier
+    }
+    startDate, 
+    endDate, 
+    transitTime, 
+    transshipment, 
+    vessels
+  }
+}
+
+query {
+  schedules {
+    route {
+      startLocation, endLocation, carrier
+    }
+    startDate, 
+    endDate, 
+    transitTime, 
+    transshipment, 
+    vessels
+  }
+}
+
+mutation {
+  addSchedule(
+    routeId: "CAVAN-SGSIN", 
+    carrier: "Hapag-Lloyd",
+    startDate: "2020-07-09",
+    endDate: "2020-08-05",
+    transitTime: 29,
+    transshipment: 1,
+	  vessels: [
+      "SEATTLE BRIDGE / 059W / PN1", 
+      "NYK FUJI / 098S / JS"
+    ],
+  ) {
+    route {
+      startLocation, endLocation, carrier
+    }
+    startDate, 
+    endDate, 
+    transitTime, 
+    transshipment, 
+    vessels
+  }
+}

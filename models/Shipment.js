@@ -8,7 +8,7 @@ const ShipmentSchema = new mongoose.Schema({
   bookedBy: {
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Company'
-  }
+  },
   bookingRequest: {
     form: {
       type: mongoose.Schema.Types.ObjectId, 
@@ -17,7 +17,7 @@ const ShipmentSchema = new mongoose.Schema({
     confirmation: {
       type: mongoose.Schema.Types.ObjectId, 
       ref: 'BookingConfirmation'
-    }
+    },
     status: String,
   },
   billInstruction: {
@@ -32,13 +32,13 @@ const ShipmentSchema = new mongoose.Schema({
     confirmation: {
       type: mongoose.Schema.Types.ObjectId, 
       ref: 'Invoice'
-    }
+    },
     status: String,
   },
   finance: {
-    cost: Schema.Types.Decimal128,
-    revenue: Schema.Types.Decimal128,
-    profit: Schema.Types.Decimal128
+    cost: mongoose.Decimal128,
+    revenue: mongoose.Decimal128,
+    profit: mongoose.Decimal128
   }
 });
 

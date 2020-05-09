@@ -1,0 +1,308 @@
+[
+  {
+    "carrier": "Hapag-Lloyd",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-09",
+    "endDate": "2020-07-31",
+    "transitTime": 22,
+    "transshipment": 0,
+    "vessels": "YM UPSURGENCE / 044W / PN2"
+  },
+  {
+    "carrier": "Hapag-Lloyd",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-16",
+    "endDate": "2020-08-07",
+    "transitTime": 22,
+    "transshipment": 0,
+    "vessels": "EXPRESS ROME / 020W / PN2"
+  },
+  {
+    "carrier": "Hapag-Lloyd",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-23",
+    "endDate": "2020-08-14",
+    "transitTime": 22,
+    "transshipment": 0,
+    "vessels": "YM UBIQUITY / 047W / PN2"
+  },
+  {
+    "carrier": "Hapag-Lloyd",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-16",
+    "endDate": "2020-08-14",
+    "transitTime": 27,
+    "transshipment": 1,
+    "vessels": "EXPRESS ROME / 020W / PN2; YM UBIQUITY / 047W / PN2"
+  },
+  {
+    "carrier": "Hapag-Lloyd",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-09",
+    "endDate": "2020-08-05",
+    "transitTime": 27,
+    "transshipment": 1,
+    "vessels": "SEATTLE BRIDGE / 059W / PN1; NYK FUJI / 098S / JSJ"
+  },
+  {
+    "carrier": "Maersk",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-01",
+    "endDate": "2020-08-08",
+    "transitTime": 38,
+    "transshipment": 0,
+    "vessels": "ANNA MAERSK / 027S"
+  },
+  {
+    "carrier": "Maersk",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-08",
+    "endDate": "2020-08-15",
+    "transitTime": 38,
+    "transshipment": 0,
+    "vessels": "Maersk Singapore / 028S"
+  },
+  {
+    "carrier": "Maersk",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-15",
+    "endDate": "2020-08-22",
+    "transitTime": 38,
+    "transshipment": 0,
+    "vessels": "MAERSK SINGAPORE / 028S"
+  },
+  {
+    "carrier": "Maersk",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-22",
+    "endDate": "2020-08-29",
+    "transitTime": 38,
+    "transshipment": 0,
+    "vessels": "NORTHERN JASPER / 012S"
+  },
+  {
+    "carrier": "Maersk",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-29",
+    "endDate": "2020-09-05",
+    "transitTime": 38,
+    "transshipment": 0,
+    "vessels": "CLEMENTINE MAERSK / 031S"
+  },
+  {
+    "carrier": "YangMing",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-02",
+    "endDate": "2020-07-24",
+    "transitTime": 22,
+    "transshipment": 0,
+    "vessels": "SEASPAN AMAZON / 016W / PN2"
+  },
+  {
+    "carrier": "YangMing",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-09",
+    "endDate": "2020-07-31",
+    "transitTime": 22,
+    "transshipment": 0,
+    "vessels": "YM UPSURGENCE / 044W / PN2"
+  },
+  {
+    "carrier": "YangMing",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-16",
+    "endDate": "2020-08-07",
+    "transitTime": 22,
+    "transshipment": 0,
+    "vessels": "EXPRESS ROME / 020W / PN2"
+  },
+  {
+    "carrier": "YangMing",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-23",
+    "endDate": "2020-08-27",
+    "transitTime": 35,
+    "transshipment": 1,
+    "vessels": "PRAGUE EXPRESS / 063W / PN4; LUDWIGSHAFEN EXPRESS / 030W / MD3"
+  },
+  {
+    "carrier": "YangMing",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-09",
+    "endDate": "2020-08-13",
+    "transitTime": 35,
+    "transshipment": 1,
+    "vessels": "FRANKFURT EXPRESS / 064W / PN4;  LEVERKUSEN EXPRESS / 033W / MD3"
+  },
+  {
+    "carrier": "ONE",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-02",
+    "endDate": "2020-07-24",
+    "transitTime": 27,
+    "transshipment": 0,
+    "vessels": "SEASPAN AMAZON / 016W / PN2"
+  },
+  {
+    "carrier": "ONE",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-09",
+    "endDate": "2020-07-31",
+    "transitTime": 27,
+    "transshipment": 0,
+    "vessels": "YM UPSURGENCE / 044W / PN2"
+  },
+  {
+    "carrier": "ONE",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-16",
+    "endDate": "2020-08-07",
+    "transitTime": 27,
+    "transshipment": 0,
+    "vessels": "EXPRESS ROME / 020W / PN2"
+  },
+  {
+    "carrier": "ONE",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-23",
+    "endDate": "2020-08-14",
+    "transitTime": 27,
+    "transshipment": 0,
+    "vessels": "YM UBIQUITY / 047W / PN2"
+  },
+  {
+    "carrier": "ONE",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-30",
+    "endDate": "2020-08-21",
+    "transitTime": 27,
+    "transshipment": 0,
+    "vessels": "SEASPAN BRILLIANCE / 039W / PN2"
+  },
+  {
+    "carrier": "MSC",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-01",
+    "endDate": "2020-08-11",
+    "transitTime": 41,
+    "transshipment": 0,
+    "vessels": "ANNA MAERSK / 027S"
+  },
+  {
+    "carrier": "APL",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-09",
+    "endDate": "2020-08-09",
+    "transitTime": 30,
+    "transshipment": 0,
+    "vessels": "APL QINGDAO / 0SV9CN1PL / WAX"
+  },
+  {
+    "carrier": "APL",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-16",
+    "endDate": "2020-08-16",
+    "transitTime": 30,
+    "transshipment": 0,
+    "vessels": "CMA CGM WINNIPEG / 0SV9GN1PL / WAX"
+  },
+  {
+    "carrier": "APL",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-23",
+    "endDate": "2020-08-23",
+    "transitTime": 30,
+    "transshipment": 0,
+    "vessels": "CMA CGM TIGRIS / 0SV9KN1PL / WAX"
+  },
+  {
+    "carrier": "APL",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-30",
+    "endDate": "2020-08-30",
+    "transitTime": 30,
+    "transshipment": 0,
+    "vessels": "CMA CGM PEGASUS / 0SV9ON1PL / WAX"
+  },
+  {
+    "carrier": "APL",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-08-06",
+    "endDate": "2020-09-06",
+    "transitTime": 30,
+    "transshipment": 0,
+    "vessels": "APL LE HAVRE / 0SV9SN1PL / WAX"
+  },
+  {
+    "carrier": "OOCL",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-09",
+    "endDate": "2020-08-09",
+    "transitTime": 31,
+    "transshipment": 0,
+    "vessels": "APL QINGDAO / 0SV9CN1MA / PNW2"
+  },
+  {
+    "carrier": "OOCL",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-23",
+    "endDate": "2020-08-23",
+    "transitTime": 31,
+    "transshipment": 0,
+    "vessels": "CMA CGM TIGRIS / 0SV9KN1MA / PNW2"
+  },
+  {
+    "carrier": "OOCL",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-30",
+    "endDate": "2020-08-30",
+    "transitTime": 31,
+    "transshipment": 0,
+    "vessels": "CMA CGM PEGASUS / 0SV9ON1MA / PNW2"
+  },
+  {
+    "carrier": "Zim Line",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "2020-07-01",
+    "endDate": "2020-08-02",
+    "transitTime": 43,
+    "transshipment": 1,
+    "vessels": "ANNA MAERSK / 10 / ZP9; ELENI T / 320 / FAX"
+  },
+  {
+    "carrier": "Zim Line",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "6-Jul-20",
+    "endDate": "18-Aug-20",
+    "transitTime": 43,
+    "transshipment": 1,
+    "vessels": "MAERSK SINGAPORE / 6 / ZP9; TO BE NAMED / 2 / ASE"
+  },
+  {
+    "carrier": "Zim Line",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "12-Jul-20",
+    "endDate": "24-Aug-20",
+    "transitTime": 43,
+    "transshipment": 1,
+    "vessels": "ZIM SAN DIEGO / 47 / ZP9; MSC PALOMA / 7 / ZMS"
+  },
+  {
+    "carrier": "Zim Line",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "20-Jul-20",
+    "endDate": "31-Aug-20",
+    "transitTime": 43,
+    "transshipment": 1,
+    "vessels": "NORTHERN JASPER / 12 / ZP9; MSC REEF / 2 / ZMS"
+  },
+  {
+    "carrier": "Zim Line",
+    "routeId": "CAVAN-SGSIN",
+    "startDate": "27-Jul-20",
+    "endDate": "7-Sep-20",
+    "transitTime": 43,
+    "transshipment": 1,
+    "vessels": "CLEMENTINE MAERSK / 9 / ZP9; MSC LONDON / 8 / ZMS"
+  }
+]
