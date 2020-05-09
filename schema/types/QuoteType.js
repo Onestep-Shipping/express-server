@@ -14,7 +14,7 @@ const {
 } = require('graphql-iso-date');
 
 const QuoteType = new GraphQLObjectType({
-  name: 'Quote',
+  name: 'QuoteType',
   fields: () => ({
     validity: {
       type: new GraphQLNonNull(ValidityType)

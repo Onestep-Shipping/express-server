@@ -1,11 +1,12 @@
 const RouteType = require('./RouteType.js');
 const QuoteType = require('./QuoteType.js');
 const ScheduleType = require('./ScheduleType.js');
+const BookingRequestType = require('./BookingRequestType.js');
 
 const {
   QuoteInputType,
   ValidityInputType,
-  FeeInputType
+  FeeInputType,
 } = require('./QuoteInputType.js');
 
 module.exports = { 

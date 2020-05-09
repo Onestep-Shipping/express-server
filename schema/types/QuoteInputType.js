@@ -14,7 +14,7 @@ const {
 } = require('graphql-iso-date');
 
 const QuoteInputType = new GraphQLInputObjectType({
-  name: 'QuoteInput',
+  name: 'QuoteInputType',
   fields: () => ({
     validity: {
       type: new GraphQLNonNull(ValidityInputType)

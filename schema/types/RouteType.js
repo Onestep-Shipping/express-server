@@ -10,7 +10,7 @@ const {
 const QuoteType = require('./QuoteType.js');
 
 const RouteType = new GraphQLObjectType({
-  name: 'Route',
+  name: 'RouteType',
   fields: () => ({
     routeId: {
       type: new GraphQLNonNull(GraphQLString)
