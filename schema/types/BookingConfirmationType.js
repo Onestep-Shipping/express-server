@@ -4,7 +4,6 @@ const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
-  GraphQLList,
   GraphQLNonNull
 } = graphql;
 
