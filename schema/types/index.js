@@ -17,5 +17,7 @@ module.exports = {
   
   QuoteInputType,
   ValidityInputType,
-  FeeInputType
+  FeeInputType,
+
+  ShipmentType
 }

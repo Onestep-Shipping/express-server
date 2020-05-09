@@ -3,11 +3,13 @@ const graphql = require('graphql');
 const Route = require('../models/Route');
 const Quote = require('../models/Quote');
 const Schedule = require('../models/Schedule');
+const Shipment = require('../models/Shipment');
 
 const { 
   RouteType,
   QuoteType,
   ScheduleType,
+  ShipmentType,
 } = require('./types/index.js');
 
 const {
@@ -57,6 +59,12 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(QuoteType),
       resolve(parent, args) {
         return Quote.find({});
+      }
+    },
+    shipments: {
+      type: new GraphQLList(ShipmentType),
+      resolve(parent, args) {
+        return Shipment.find({});
       }
     },
     schedule: {

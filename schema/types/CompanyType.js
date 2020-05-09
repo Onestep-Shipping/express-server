@@ -8,7 +8,6 @@ const {
 } = graphql;
 
 const AddressType = require('./AddressType.js');
-const ShipmentType = require('./ShipmentType.js');
 
 const CompanyType = new GraphQLObjectType({
   name: 'CompanyType',
@@ -32,7 +31,7 @@ const CompanyType = new GraphQLObjectType({
       type: new GraphQLNonNull(GraphQLString)
     },
     shipments: {
-      type: new GraphQLList(ShipmentType)
+      type: new GraphQLList(require('./ShipmentType.js')) // To prevent circular dependencies problem between Company and Shipments
     },
   })
 });
