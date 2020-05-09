@@ -11,6 +11,11 @@ const {
 } = require('./types/index.js');
 
 const {
+  GraphQLDate,
+  GraphQLDateTime
+} = require('graphql-iso-date');
+
+const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLBoolean,
@@ -52,6 +57,36 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(QuoteType),
       resolve(parent, args) {
         return Quote.find({});
+      }
+    },
+    schedule: {
+      type: new GraphQLList(ScheduleType),
+      args: {
+        routeId: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
+        carrier: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
+        startDate: {
+          type: new GraphQLNonNull(GraphQLDate)
+        },
+        endDate: {
+          type: new GraphQLNonNull(GraphQLDate)
+        },
+      },
+      resolve(parent, args) {
+        return Route.findOne({ 
+          routeId: args.routeId,
+          carrier: args.carrier
+        }).then(route => {
+          return Schedule.find({
+            route: route._id,
+            startDate: { $gte: args.startDate, $lte: args.endDate }
+          })
+          .populate('route')
+          .sort({transshipment: 1, startDate: 1});
+        })
       }
     },
     schedules: {

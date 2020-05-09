@@ -3,47 +3,26 @@ const Schedule = require('../models/Schedule');
 
 const CARRIERS = ['Hapag-Lloyd', 'Maersk', 'YangMing', 'ONE', 'MSC', 'APL', 'OOCL', 'Zim Line'];
 
-const SCHEDULES = [
-  
-];
+const SCHEDULES = require('./schedule.json');
 
-const autoGenerateSchedules = () => {
+const autoGenerateSchedule = () => {
   let hugeSchedules = [];
   SCHEDULES.map(schedule => {
     Route.findOne({ 
       routeId: schedule.routeId,
       carrier: schedule.carrier
     }).then(route => {
-      Schedule.findOne({ 
-        route: route._id,
+      // TODO: Switch to insert many
+      Schedule.collection.insertOne(new Schedule({
+        route,
         startDate: schedule.startDate,
         endDate: schedule.endDate,
         transitTime: schedule.transitTime,
         transshipment: schedule.transshipment,
-        vessels: schedule.vessels.split(";")
-      }).then(schedule => {
-        if (!schedule) {
-          hugeSchedules.push(new Schedule({
-            route,
-            startDate: schedule.startDate,
-            endDate: schedule.endDate,
-            transitTime: schedule.transitTime,
-            transshipment: schedule.transshipment,
-            vessels: schedule.vessels.split(";")
-          }))
-        }
-      })
-    }
+        vessels: schedule.vessels.split("; ")
+      }))
+    })
   })
-  Schedule.collection.insertMany(hugeSchedules, onInsert);
 }
 
-function onInsert(err, docs) {
-  if (err) {
-      // TODO: handle error
-  } else {
-      console.info('%d schedules were successfully stored.', docs.length);
-  }
-}
-
-module.exports = autoGenerateSchedules;
+module.exports = autoGenerateSchedule;
