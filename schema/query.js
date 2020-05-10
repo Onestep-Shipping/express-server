@@ -40,6 +40,37 @@ const RootQuery = new GraphQLObjectType({
         return Company.find({});
       }
     },
+    getScheduleIds: {
+      type: new GraphQLList(GraphQLString),
+      args: {
+        routeId: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
+        carrier: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
+        startDate: {
+          type: new GraphQLNonNull(GraphQLDate)
+        },
+        endDate: {
+          type: new GraphQLNonNull(GraphQLDate)
+        },
+      },
+      resolve(parent, args) {
+        return Route.findOne({ 
+          routeId: args.routeId,
+          carrier: args.carrier
+        }).then(route => {
+          return Schedule.find({
+            route: route._id,
+            startDate: { $gte: args.startDate, $lte: args.endDate }
+          })
+          .distinct('_id', function(error, ids) {
+              return ids;
+          });
+        })
+      }
+    },
     findSchedules: {
       type: new GraphQLList(ScheduleType),
       args: {
