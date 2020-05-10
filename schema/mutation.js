@@ -29,21 +29,21 @@ const {
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    addQuote: {
+    addQuoteToRoutes: {
       type: QuoteType,
       args: {
-          validity: {
-            type: new GraphQLNonNull(ValidityInputType)
-          },
-          buying: {
-            type: new GraphQLNonNull(FeeInputType)
-          },
-          selling: {
-            type: new GraphQLNonNull(FeeInputType)
-          },
-          except: {
-            type: GraphQLString
-          },
+        validity: {
+          type: new GraphQLNonNull(ValidityInputType)
+        },
+        buying: {
+          type: new GraphQLNonNull(FeeInputType)
+        },
+        selling: {
+          type: new GraphQLNonNull(FeeInputType)
+        },
+        except: {
+          type: GraphQLString
+        },
       },
       resolve(parent, args) {
         let quote = new Quote({
