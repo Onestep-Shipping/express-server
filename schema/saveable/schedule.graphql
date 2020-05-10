@@ -17,6 +17,54 @@ query {
 }
 
 query {
+  getQuoteHistory(
+    routeId: "CAVAN-SGSIN",
+    carrier: "OOCL",
+    startDate: "2020-07-01",
+    endDate: "2020-07-30"
+  )
+}
+
+query {
+  findSchedules(
+    routeId: "CAVAN-SGSIN",
+    carrier: "OOCL",
+    startDate: "2020-07-01",
+    endDate: "2020-07-30"
+  ) {
+    route {
+      startLocation, endLocation, carrier, 
+      quoteHistory {
+        validity { 
+          startDate,
+          endDate
+        }
+        buying {
+          oceanFreight {
+            containerType, price
+          },
+          docFee, 
+          adminFee
+        }, 
+        selling {
+          oceanFreight {
+            containerType, price
+          },
+          docFee, 
+          adminFee
+        }, 
+        except
+      }
+    }
+    startDate, 
+    endDate, 
+    transitTime, 
+    transshipment, 
+    vessels
+  }
+}
+
+query {
   schedules {
     route {
       startLocation, endLocation, carrier

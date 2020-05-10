@@ -21,9 +21,11 @@ app.use(function(req, res, next) {
 const uri = process.env.DB_URI;
 
 // Connect to Mongo
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
-        .then(() => console.log("MongoDB connected!"))
-        .catch(err => console.log(err));
+mongoose.connect(uri, { 
+    useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false
+  })
+  .then(() => console.log("MongoDB connected!"))
+  .catch(err => console.log(err));
 
 // GraphQL
 // Construct a schema, using GraphQL schema language

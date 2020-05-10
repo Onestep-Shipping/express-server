@@ -1,6 +1,8 @@
 const graphql = require('graphql');
 
+const Route = require('../models/Route');
 const Quote = require('../models/Quote');
+const Schedule = require('../models/Schedule');
 
 const { 
   QuoteType,
@@ -29,9 +31,15 @@ const {
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    addQuoteToRoutes: {
+    addQuoteToSchedules: {
       type: QuoteType,
       args: {
+        routeId: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
+        carrier: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
         validity: {
           type: new GraphQLNonNull(ValidityInputType)
         },
@@ -45,14 +53,23 @@ const Mutation = new GraphQLObjectType({
           type: GraphQLString
         },
       },
-      resolve(parent, args) {
+      resolve(parent, args) { 
         let quote = new Quote({
           validity: args.validity,
           buying: args.buying,
           selling: args.selling,
           except: args.except,
         });
-        return quote.save();
+        return quote.save(function(err, savedQuote) {
+          Route.findOneAndUpdate(
+            { routeId: args.routeId, carrier: args.carrier },
+            { $push: { quoteHistory: savedQuote } },
+            { new: true },
+            function (err, data) {
+              console.log(err);
+            }
+          )
+        });
       }
     },
   }

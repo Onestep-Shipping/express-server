@@ -40,8 +40,8 @@ const RootQuery = new GraphQLObjectType({
         return Company.find({});
       }
     },
-    getScheduleIds: {
-      type: new GraphQLList(GraphQLString),
+    getQuoteHistory: {
+      type: new GraphQLList(QuoteType),
       args: {
         routeId: {
           type: new GraphQLNonNull(GraphQLString)
@@ -60,14 +60,10 @@ const RootQuery = new GraphQLObjectType({
         return Route.findOne({ 
           routeId: args.routeId,
           carrier: args.carrier
-        }).then(route => {
-          return Schedule.find({
-            route: route._id,
-            startDate: { $gte: args.startDate, $lte: args.endDate }
-          })
-          .distinct('_id', function(error, ids) {
-              return ids;
-          });
+        })
+        .populate('quoteHistory')
+        .then(route => {
+          return route.quoteHistory
         })
       }
     },
@@ -91,12 +87,18 @@ const RootQuery = new GraphQLObjectType({
         return Route.findOne({ 
           routeId: args.routeId,
           carrier: args.carrier
-        }).then(route => {
+        })
+        .then(route => {
           return Schedule.find({
             route: route._id,
             startDate: { $gte: args.startDate, $lte: args.endDate }
           })
-          .populate('route')
+          .populate({ 
+            path: 'route',
+            populate: {
+              path: 'quoteHistory',
+            } 
+          })
           .sort({transshipment: 1, startDate: 1});
         })
       }

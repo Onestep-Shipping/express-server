@@ -20,11 +20,42 @@ query {
   }
 }
 
+query {
+  getQuoteHistory(
+    routeId: "CAVAN-SGSIN",
+    carrier: "OOCL",
+    startDate: "2020-07-01",
+    endDate: "2020-07-30"
+  ) {
+    validity { 
+      startDate,
+      endDate
+    }
+    buying {
+      oceanFreight {
+        containerType, price
+      },
+      docFee, 
+      adminFee
+    }, 
+    selling {
+      oceanFreight {
+        containerType, price
+      },
+      docFee, 
+      adminFee
+    }, 
+    except
+  }
+}
+
 mutation {
-  addQuote(
+  addQuoteToSchedules(
+    routeId: "CAVAN-SGSIN",
+    carrier: "OOCL",
     validity: {
-      startDate: "2020-05-01",
-      endDate: "2020-05-31"
+      startDate: "2020-07-01",
+      endDate: "2020-07-31"
     },
     buying: {
       oceanFreight: [
