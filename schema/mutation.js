@@ -21,6 +21,8 @@ const {
   ShipmentType,
   CompanyType,
   BookingRequestInputType,
+
+  FileType,
 } = require('./types/index.js');
 
 const {
@@ -122,7 +124,7 @@ const Mutation = new GraphQLObjectType({
       }
     },
     uploadFile: {
-      type: GraphQLString,
+      type: FileType,
       args: {
         file: {
           type: new GraphQLNonNull(GraphQLUpload)
@@ -130,7 +132,7 @@ const Mutation = new GraphQLObjectType({
       },
       resolve(parent, args) { 
         return args.file.then(file => {
-          const { createReadStream, filename, mimetype } = file
+          const { filename, mimetype, createReadStream } = file
           const fileStream = createReadStream();
           fileStream.pipe(fs.createWriteStream(`../files/${filename}`));
           return file;
