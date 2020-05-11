@@ -1,14 +1,24 @@
 const graphql = require('graphql');
+const mongoose = require('mongoose');
 
 const Route = require('../models/Route');
 const Quote = require('../models/Quote');
 const Schedule = require('../models/Schedule');
+const BookingRequest = require('../models/BookingRequest');
+const Shipment = require('../models/Shipment');
+const Company = require('../models/Company');
+
+const { BOOKING_STATUS, BOL_STATUS, INVOICE_STATUS } = require('../constants/Status');
 
 const { 
   QuoteType,
   QuoteInputType,
   ValidityInputType,
   FeeInputType,
+
+  ShipmentType,
+  CompanyType,
+  BookingRequestInputType,
 } = require('./types/index.js');
 
 const {
@@ -72,6 +82,43 @@ const Mutation = new GraphQLObjectType({
         });
       }
     },
+    createBookingRequestAndInitShipment: {
+      type: ShipmentType,
+      args: {
+        companyId: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
+        scheduleId: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
+        bookingRequest: {
+          type: new GraphQLNonNull(BookingRequestInputType)
+        },
+      },
+      resolve(parent, args) { 
+        const { commodity, hsCode, containers, paymentTerm, autoFilling } = args.bookingRequest;
+        let bookingRequest = new BookingRequest({
+          commodity, hsCode, containers, paymentTerm, autoFilling
+        });
+        bookingRequest.save(function(err, savedBookingRequest) {
+          const shipment = new Shipment({
+            schedule: mongoose.Types.ObjectId(args.scheduleId),
+            bookedBy: mongoose.Types.ObjectId(args.companyId),
+            bookingRequest: {
+              form: savedBookingRequest,
+              status: BOOKING_STATUS[0],
+            },
+            billInstruction: {
+              status: BOL_STATUS[0]
+            },
+            invoice: {
+              status: INVOICE_STATUS[0]
+            },
+          })
+          return shipment.save();
+        });
+      }
+    }
   }
 })
 

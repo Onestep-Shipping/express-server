@@ -1,0 +1,38 @@
+
+mutation {
+  createBookingRequestAndInitShipment(
+    companyId: "5eb5f824719c6b5e7aa975c6",
+    scheduleId: "5eb5f824719c6b5e7aa975c6",
+    bookingRequest: {
+      commodity: "Scrap paper",
+      hsCode: "8895.60",
+      containers: [
+        {
+          containerType: "20' Dry",
+          quantity: 1
+        },
+        {
+          containerType: "40' Dry",
+          quantity: 2
+        },
+        {
+          containerType: "40'HC Dry",
+          quantity: 3
+        },
+      ],
+      paymentTerm: "Prepaid",
+      autoFilling: true
+    }
+  ) {
+    schedule {
+      route {
+        startLocation, endLocation, carrier
+      }
+      startDate, 
+      endDate, 
+      transitTime, 
+      transshipment, 
+      vessels
+    }
+  }
+}

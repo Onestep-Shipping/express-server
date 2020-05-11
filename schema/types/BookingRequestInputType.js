@@ -1,7 +1,7 @@
 const graphql = require('graphql');
 
 const {
-  GraphQLObjectType,
+  GraphQLInputObjectType,
   GraphQLString,
   GraphQLBoolean,
   GraphQLInt,
@@ -9,8 +9,8 @@ const {
   GraphQLNonNull
 } = graphql;
 
-const BookingRequestType = new GraphQLObjectType({
-  name: 'BookingRequestType',
+const BookingRequestInputType = new GraphQLInputObjectType({
+  name: 'BookingRequestInputType',
   fields: () => ({
     commodity: {
       type: new GraphQLNonNull(GraphQLString)
@@ -19,7 +19,7 @@ const BookingRequestType = new GraphQLObjectType({
       type: new GraphQLNonNull(GraphQLString)
     },
     containers: {
-      type: new GraphQLList(ContainerAndQuantityType)
+      type: new GraphQLList(ContainerAndQuantityInputType)
     },
     paymentTerm: {
       type: new GraphQLNonNull(GraphQLString)
@@ -30,8 +30,8 @@ const BookingRequestType = new GraphQLObjectType({
   })
 });
 
-const ContainerAndQuantityType = new GraphQLObjectType({
-  name: 'ContainerAndQuantityType',
+const ContainerAndQuantityInputType = new GraphQLInputObjectType({
+  name: 'ContainerAndQuantityInputType',
   fields: () => ({
     containerType: {
       type: new GraphQLNonNull(GraphQLString)
@@ -42,4 +42,4 @@ const ContainerAndQuantityType = new GraphQLObjectType({
   })
 });
 
-module.exports = BookingRequestType;
+module.exports = BookingRequestInputType;
