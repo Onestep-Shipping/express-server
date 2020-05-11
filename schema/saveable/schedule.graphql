@@ -1,22 +1,4 @@
 query {
-  schedule(
-    routeId: "CAVAN-SGSIN",
-    carrier: "ONE",
-    startDate: "2020-07-01",
-    endDate: "2020-07-30"
-  ) {
-    route {
-      startLocation, endLocation, carrier
-    }
-    startDate, 
-    endDate, 
-    transitTime, 
-    transshipment, 
-    vessels
-  }
-}
-
-query {
   getQuoteHistory(
     routeId: "CAVAN-SGSIN",
     carrier: "OOCL",
@@ -55,19 +37,6 @@ query {
         }, 
         except
       }
-    }
-    startDate, 
-    endDate, 
-    transitTime, 
-    transshipment, 
-    vessels
-  }
-}
-
-query {
-  schedules {
-    route {
-      startLocation, endLocation, carrier
     }
     startDate, 
     endDate, 

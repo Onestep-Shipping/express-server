@@ -1,5 +1,6 @@
 const graphql = require('graphql');
 const mongoose = require('mongoose');
+const { GraphQLUpload } = require('graphql-upload');
 
 const Route = require('../models/Route');
 const Quote = require('../models/Quote');
@@ -7,6 +8,7 @@ const Schedule = require('../models/Schedule');
 const BookingRequest = require('../models/BookingRequest');
 const Shipment = require('../models/Shipment');
 const Company = require('../models/Company');
+
 
 const { BOOKING_STATUS, BOL_STATUS, INVOICE_STATUS } = require('../constants/Status');
 
@@ -118,7 +120,23 @@ const Mutation = new GraphQLObjectType({
           return shipment.save();
         });
       }
-    }
+    },
+    uploadFile: {
+      type: GraphQLString,
+      args: {
+        file: {
+          type: new GraphQLNonNull(GraphQLUpload)
+        },
+      },
+      resolve(parent, args) { 
+        return args.file.then(file => {
+          const { createReadStream, filename, mimetype } = file
+          const fileStream = createReadStream();
+          fileStream.pipe(fs.createWriteStream(`../files/${filename}`));
+          return file;
+        });
+      }
+    },
   }
 })
 
