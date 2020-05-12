@@ -70,8 +70,5 @@ const FeeInputType = new GraphQLInputObjectType({
   }
 });
 
-module.exports = { 
-  QuoteInputType,
-  ValidityInputType,
-  FeeInputType
-} 
+module.exports = QuoteInputType;
+

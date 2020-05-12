@@ -8,21 +8,20 @@ const BookingRequest = require('../models/BookingRequest');
 const Shipment = require('../models/Shipment');
 const Company = require('../models/Company');
 const BookingConfirmation = require('../models/BookingConfirmation');
+const BillInstruction = require('../models/BillInstruction');
 
 const { BOOKING_STATUS, BOL_STATUS, INVOICE_STATUS } = require('../constants/Status');
 
-const { 
-  QuoteType,
-  QuoteInputType,
-  ValidityInputType,
-  FeeInputType,
-
-  ShipmentType,
-  CompanyType,
+const {
+  BillInstructionType,
+  BillInstructionInputType,
   BookingRequestInputType,
-
   BookingConfirmationType,
   BookingConfirmationInputType,
+  CompanyType,
+  QuoteType,
+  QuoteInputType,
+  ShipmentType
 } = require('./types/index.js');
 
 const {
@@ -118,13 +117,40 @@ const Mutation = new GraphQLObjectType({
       },
       resolve(parent, args) { 
         const bookingConfirmation = new BookingConfirmation(args.bookingConfirmation);
-        bookingConfirmation.save((err, savedBookingConfirmation) => {
-          return Shipment.findOneAndUpdate(
+        return bookingConfirmation.save((err, savedBookingConfirmation) => {
+          Shipment.findOneAndUpdate(
             {_id: args.shipmentId},
             { $set: { 
               "bookingRequest.confirmation": savedBookingConfirmation,
               "bookingRequest.status": BOOKING_STATUS[1],
               "billInstruction.status": BOL_STATUS[1]
+            } },
+            { new: true },
+            function (err, data) {
+              console.log(err);
+            }
+          );
+        })
+      }
+    },
+    createBillInstruction: {
+      type: BillInstructionType,
+      args: {
+        shipmentId: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
+        billInstruction: {
+          type: new GraphQLNonNull(BillInstructionInputType)
+        }
+      },
+      resolve(parent, args) { 
+        const billInstruction = new BillInstruction(args.billInstruction);
+        return billInstruction.save((err, savedBillInstruction) => {
+          Shipment.findOneAndUpdate(
+            {_id: args.shipmentId},
+            { $set: { 
+              "billInstruction.form": savedBillInstruction,
+              "billInstruction.status": BOL_STATUS[2],
             } },
             { new: true },
             function (err, data) {
