@@ -1,0 +1,26 @@
+mutation {
+  createBillInstruction(
+    shipmentId: "5eba2f1cbc0c7198575f64bb",
+    billInstruction: {
+      shipper: "Scarlet Nguyen",
+      consignee: "Rose Phan",
+      notify: "None",
+      description: "Good quality scrap paper",
+      containers: [
+        {
+          containerNo: "12345LQW",
+          seelNo: "76538",
+          weight: 100.0,
+          measurement: 200.0,
+          vgm: 300.0,
+        }
+      ],
+      orderNo: "934927",
+      hsCode: "1256.54",
+      caedNo: "8543236873KJB932",
+      cargoValue: "USD $2000"
+    }
+  ) {
+    shipper
+  }
+}

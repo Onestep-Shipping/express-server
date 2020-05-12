@@ -117,8 +117,8 @@ const Mutation = new GraphQLObjectType({
       },
       resolve(parent, args) { 
         const bookingConfirmation = new BookingConfirmation(args.bookingConfirmation);
-        bookingConfirmation.save((err, savedBookingConfirmation) => {
-          return Shipment.findOneAndUpdate(
+        return bookingConfirmation.save((err, savedBookingConfirmation) => {
+          Shipment.findOneAndUpdate(
             {_id: args.shipmentId},
             { $set: { 
               "bookingRequest.confirmation": savedBookingConfirmation,
@@ -145,8 +145,8 @@ const Mutation = new GraphQLObjectType({
       },
       resolve(parent, args) { 
         const billInstruction = new BillInstruction(args.billInstruction);
-        billInstruction.save((err, savedBillInstruction) => {
-          return Shipment.findOneAndUpdate(
+        return billInstruction.save((err, savedBillInstruction) => {
+          Shipment.findOneAndUpdate(
             {_id: args.shipmentId},
             { $set: { 
               "billInstruction.form": savedBillInstruction,
