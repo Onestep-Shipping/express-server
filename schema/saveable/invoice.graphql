@@ -1,0 +1,19 @@
+mutation {
+  createInvoice(
+    shipmentId: "5ebb05b796e497c37a43fa14",
+    pdf: "./files/Invoice #5764235.pdf"
+    revenue: 8000,
+    profit: 1570
+  ) {
+    schedule {
+      route {
+        startLocation, endLocation, carrier
+      }
+      startDate, 
+      endDate, 
+      transitTime, 
+      transshipment, 
+      vessels
+    }
+  }
+}

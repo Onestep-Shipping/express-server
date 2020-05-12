@@ -190,10 +190,7 @@ const Mutation = new GraphQLObjectType({
         return Shipment.findOneAndUpdate(
           {_id: args.shipmentId},
           { $set: { 
-            invoice: {
-              pdf: args.pdf,
-              status: INVOICE_STATUS[1]
-            },
+            invoice: { pdf: args.pdf, status: INVOICE_STATUS[1] },
             "finance.revenue": args.revenue,
             "finance.profit": args.profit,
           } },
