@@ -54,26 +54,12 @@ const Mutation = new GraphQLObjectType({
         carrier: {
           type: new GraphQLNonNull(GraphQLString)
         },
-        validity: {
-          type: new GraphQLNonNull(ValidityInputType)
-        },
-        buying: {
-          type: new GraphQLNonNull(FeeInputType)
-        },
-        selling: {
-          type: new GraphQLNonNull(FeeInputType)
-        },
-        except: {
-          type: GraphQLString
+        quote: {
+          type: new GraphQLNonNull(QuoteInputType)
         },
       },
       resolve(parent, args) { 
-        let quote = new Quote({
-          validity: args.validity,
-          buying: args.buying,
-          selling: args.selling,
-          except: args.except,
-        });
+        let quote = new Quote(args.quote);
         return quote.save(function(err, savedQuote) {
           Route.findOneAndUpdate(
             { routeId: args.routeId, carrier: args.carrier },
