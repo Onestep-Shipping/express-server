@@ -27,21 +27,6 @@ mongoose.connect(uri, {
   .then(() => console.log("MongoDB connected!"))
   .catch(err => console.log(err));
 
-// GraphQL
-// Construct a schema, using GraphQL schema language
-const schema = buildSchema(`
-  type Query {
-    hello(name: String!): String
-  }
-`);
-
-// The root provides a resolver function for each API endpoint
-const root = {
-  hello: ({ name }) => {
-    return 'Hello ' + name;
-  },
-};
-
 // Bodyparser
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
