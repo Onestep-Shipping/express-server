@@ -3,7 +3,7 @@ const calculateCost = (buying, containers) => {
   containers.map(container => {
     buying.oceanFreight.map((ocf, ind) => {
       if (ocf.containerType === container.containerType) {
-        finalCost += (buying.oceanFreight[ind] * container.quantity);
+        finalCost += (ocf.price * container.quantity);
       }
     })
   })
