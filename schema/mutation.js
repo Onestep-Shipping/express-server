@@ -135,7 +135,11 @@ const Mutation = new GraphQLObjectType({
         bookingConfirmation.save((err, savedBookingConfirmation) => {
           return Shipment.findOneAndUpdate(
             {_id: args.shipmentId},
-            { $set: { "bookingRequest.confirmation": savedBookingConfirmation } },
+            { $set: { 
+              "bookingRequest.confirmation": savedBookingConfirmation,
+              "bookingRequest.status": BOOKING_STATUS[1],
+              "billInstruction.status": BOL_STATUS[1]
+            } },
             { new: true },
             function (err, data) {
               console.log(err);
