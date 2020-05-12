@@ -1,11 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const fileUpload = require('express-fileupload');
 const graphqlHTTP = require('express-graphql');
 const { buildSchema } = require('graphql');
 const Schema = require('./schema/schema');
 
 const app = express();
+app.use(fileUpload());
 
 require('dotenv').config();
 
@@ -27,28 +29,14 @@ mongoose.connect(uri, {
   .then(() => console.log("MongoDB connected!"))
   .catch(err => console.log(err));
 
-// GraphQL
-// Construct a schema, using GraphQL schema language
-const schema = buildSchema(`
-  type Query {
-    hello(name: String!): String
-  }
-`);
-
-// The root provides a resolver function for each API endpoint
-const root = {
-  hello: ({ name }) => {
-    return 'Hello ' + name;
-  },
-};
-
 // Bodyparser
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({limit: "50mb", extended: false, parameterLimit: 50000}));
 app.use('/graphql', graphqlHTTP({
   schema: Schema,
   graphiql: true,
 }));
+app.use('/upload', require('./upload'));
 
 const PORT = process.env.PORT || 5000;
 
