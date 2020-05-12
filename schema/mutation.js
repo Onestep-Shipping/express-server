@@ -135,7 +135,7 @@ const Mutation = new GraphQLObjectType({
       }
     }
   },
-  rollSchedule: {
+  rollShipment: {
     type: ShipmentType,
     args: {
       shipmentId: {
@@ -149,6 +149,28 @@ const Mutation = new GraphQLObjectType({
       return Shipment.findOneAndUpdate(
         {_id: args.shipmentId},
         { $set: { schedule: mongoose.Types.ObjectId(newScheduleId) } },
+        { new: true },
+        function (err, data) {
+          console.log(err);
+        }
+      );
+    }
+  },
+  cancelShipment: {
+    type: ShipmentType,
+    args: {
+      shipmentId: {
+        type: new GraphQLNonNull(GraphQLString)
+      },
+    },
+    resolve(parent, args) { 
+      return Shipment.findOneAndUpdate(
+        {_id: args.shipmentId},
+        { $set: { 
+          "bookingRequest.status": BOOKING_STATUS[BOOKING_STATUS.length - 1],
+          "billInstruction.status": BOL_STATUS[BOL_STATUS.length - 1],
+          "invoice.status": INVOICE_STATUS[INVOICE_STATUS.length - 1],
+        } },
         { new: true },
         function (err, data) {
           console.log(err);
