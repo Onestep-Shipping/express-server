@@ -7,6 +7,7 @@ const Schedule = require('../models/Schedule');
 const BookingRequest = require('../models/BookingRequest');
 const Shipment = require('../models/Shipment');
 const Company = require('../models/Company');
+const BookingConfirmation = require('../models/BookingConfirmation');
 
 const { BOOKING_STATUS, BOL_STATUS, INVOICE_STATUS } = require('../constants/Status');
 
@@ -19,6 +20,9 @@ const {
   ShipmentType,
   CompanyType,
   BookingRequestInputType,
+
+  BookingConfirmationType,
+  BookingConfirmationInputType,
 } = require('./types/index.js');
 
 const {
@@ -96,10 +100,7 @@ const Mutation = new GraphQLObjectType({
         },
       },
       resolve(parent, args) { 
-        const { commodity, hsCode, containers, paymentTerm, autoFilling } = args.bookingRequest;
-        let bookingRequest = new BookingRequest({
-          commodity, hsCode, containers, paymentTerm, autoFilling
-        });
+        let bookingRequest = new BookingRequest(args.bookingRequest);
         bookingRequest.save(function(err, savedBookingRequest) {
           const shipment = new Shipment({
             schedule: mongoose.Types.ObjectId(args.scheduleId),
@@ -117,6 +118,34 @@ const Mutation = new GraphQLObjectType({
           })
           return shipment.save();
         });
+      }
+    },
+    createBookingConfirmation: {
+      type: BookingConfirmationType,
+      args: {
+        shipmentId: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
+        bookingConfirmation: {
+          type: new GraphQLNonNull(BookingConfirmationInputType)
+        }
+      },
+      resolve(parent, args) { 
+        const bookingConfirmation = new BookingConfirmation(args.bookingConfirmation);
+        bookingConfirmation.save((err, savedBookingConfirmation) => {
+          return Shipment.findOneAndUpdate(
+            {_id: args.shipmentId},
+            { $set: { 
+              "bookingRequest.confirmation": savedBookingConfirmation,
+              "bookingRequest.status": BOOKING_STATUS[1],
+              "billInstruction.status": BOL_STATUS[1]
+            } },
+            { new: true },
+            function (err, data) {
+              console.log(err);
+            }
+          );
+        })
       }
     }
   }
