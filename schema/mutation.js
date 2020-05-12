@@ -19,6 +19,9 @@ const {
   ShipmentType,
   CompanyType,
   BookingRequestInputType,
+
+  BookingConfirmationType,
+  BookingConfirmationInputType,
 } = require('./types/index.js');
 
 const {
@@ -96,10 +99,7 @@ const Mutation = new GraphQLObjectType({
         },
       },
       resolve(parent, args) { 
-        const { commodity, hsCode, containers, paymentTerm, autoFilling } = args.bookingRequest;
-        let bookingRequest = new BookingRequest({
-          commodity, hsCode, containers, paymentTerm, autoFilling
-        });
+        let bookingRequest = new BookingRequest(args.bookingRequest);
         bookingRequest.save(function(err, savedBookingRequest) {
           const shipment = new Shipment({
             schedule: mongoose.Types.ObjectId(args.scheduleId),
@@ -117,6 +117,28 @@ const Mutation = new GraphQLObjectType({
           })
           return shipment.save();
         });
+      }
+    },
+    createBookingConfirmation: {
+      type: BookingConfirmationType,
+      args: {
+        shipmentId: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
+        bookingConfirmation: {
+          type: new GraphQLNonNull(BookingConfirmationInputType)
+        }
+      },
+      resolve(parent, args) { 
+        const bookingConfirmation = new BookingConfirmation(args.bookingConfirmation);
+        return Shipment.findOneAndUpdate(
+          {_id: args.shipmentId},
+          { $set: { bookingRequest: { confirmation: bookingConfirmation } } },
+          { new: true },
+          function (err, data) {
+            console.log(err);
+          }
+        )
       }
     }
   }
