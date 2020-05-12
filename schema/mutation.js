@@ -124,7 +124,7 @@ const Mutation = new GraphQLObjectType({
       }
     },
     uploadFile: {
-      type: FileType,
+      type: GraphQLString,
       args: {
         file: {
           type: new GraphQLNonNull(GraphQLUpload)
@@ -135,7 +135,7 @@ const Mutation = new GraphQLObjectType({
           const { filename, mimetype, createReadStream } = file
           const fileStream = createReadStream();
           fileStream.pipe(fs.createWriteStream(`../files/${filename}`));
-          return file;
+          return "OK";
         });
       }
     },
