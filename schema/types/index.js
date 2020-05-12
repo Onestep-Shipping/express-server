@@ -12,7 +12,6 @@ const BillInstructionType = require('./BillInstructionType.js');
 const BillInstructionInputType = require('./BillInstructionInputType.js');
 const InvoiceType = require('./InvoiceType.js');
 const InvoiceInputType = require('./InvoiceInputType.js');
-const FinanceInputType = require('./FinanceInputType.js');
 
 module.exports = { 
   RouteType, 
@@ -33,6 +32,4 @@ module.exports = {
 
   InvoiceType,
   InvoiceInputType,
-
-  FinanceInputType,
 }

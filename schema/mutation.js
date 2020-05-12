@@ -11,6 +11,8 @@ const BookingConfirmation = require('../models/BookingConfirmation');
 const BillInstruction = require('../models/BillInstruction');
 const Invoice = require('../models/Invoice');
 
+const calculateCost = require('../utils/calculateCost.js');
+
 const { BOOKING_STATUS, BOL_STATUS, INVOICE_STATUS } = require('../constants/Status');
 
 const {
@@ -25,7 +27,6 @@ const {
   ShipmentType,
   InvoiceType,
   InvoiceInputType,
-  FinanceInputType,
 } = require('./types/index.js');
 
 const {
@@ -108,6 +109,9 @@ const Mutation = new GraphQLObjectType({
               invoice: {
                 status: INVOICE_STATUS[0]
               },
+              finance: {
+                cost: calculateCost(quote.buying, bookingRequest.containers)
+              }
             })
             return shipment.save();
           });
@@ -178,8 +182,11 @@ const Mutation = new GraphQLObjectType({
         invoice: {
           type: new GraphQLNonNull(InvoiceInputType)
         }, 
-        finance: {
-          type: new GraphQLNonNull(FinanceInputType)
+        revenue: {
+          type: new GraphQLNonNull(GraphQLFloat)
+        },
+        profit: {
+          type: new GraphQLNonNull(GraphQLFloat)
         }
       },
       resolve(parent, args) { 
@@ -192,7 +199,8 @@ const Mutation = new GraphQLObjectType({
                 confirmation: savedInvoice,
                 status: INVOICE_STATUS[1]
               },
-              finance: args.finance
+              "finance.revenue": args.revenue,
+              "finance.profit": args.profit,
             } },
             { new: true },
             function (err, data) {

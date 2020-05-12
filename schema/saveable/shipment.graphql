@@ -3,10 +3,15 @@ mutation {
   createBookingRequestAndInitShipment(
     companyId: "5eb5f824719c6b5e7aa975c6",
     scheduleId: "5eb5f824719c6b5e7aa975c6",
+    quoteId: "5ebb0460f5ac1ec200707ec7",
     bookingRequest: {
-      commodity: "Scrap paper",
-      hsCode: "8895.60",
+      commodity: "Shoes",
+      hsCode: "4674.86",
       containers: [
+        {
+          containerType: "40'HC Dry",
+          quantity: 3
+        },
         {
           containerType: "20' Dry",
           quantity: 1
@@ -14,10 +19,6 @@ mutation {
         {
           containerType: "40' Dry",
           quantity: 2
-        },
-        {
-          containerType: "40'HC Dry",
-          quantity: 3
         },
       ],
       paymentTerm: "Prepaid",
