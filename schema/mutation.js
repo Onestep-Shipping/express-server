@@ -9,6 +9,7 @@ const Shipment = require('../models/Shipment');
 const Company = require('../models/Company');
 const BookingConfirmation = require('../models/BookingConfirmation');
 const BillInstruction = require('../models/BillInstruction');
+const Invoice = require('../models/Invoice');
 
 const { BOOKING_STATUS, BOL_STATUS, INVOICE_STATUS } = require('../constants/Status');
 
@@ -21,7 +22,10 @@ const {
   CompanyType,
   QuoteType,
   QuoteInputType,
-  ShipmentType
+  ShipmentType,
+  InvoiceType,
+  InvoiceInputType,
+  FinanceInputType,
 } = require('./types/index.js');
 
 const {
@@ -80,6 +84,9 @@ const Mutation = new GraphQLObjectType({
         scheduleId: {
           type: new GraphQLNonNull(GraphQLString)
         },
+        quoteId: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
         bookingRequest: {
           type: new GraphQLNonNull(BookingRequestInputType)
         },
@@ -87,21 +94,23 @@ const Mutation = new GraphQLObjectType({
       resolve(parent, args) { 
         let bookingRequest = new BookingRequest(args.bookingRequest);
         bookingRequest.save(function(err, savedBookingRequest) {
-          const shipment = new Shipment({
-            schedule: mongoose.Types.ObjectId(args.scheduleId),
-            bookedBy: mongoose.Types.ObjectId(args.companyId),
-            bookingRequest: {
-              form: savedBookingRequest,
-              status: BOOKING_STATUS[0],
-            },
-            billInstruction: {
-              status: BOL_STATUS[0]
-            },
-            invoice: {
-              status: INVOICE_STATUS[0]
-            },
-          })
-          return shipment.save();
+          Quote.findById(args.quoteId, function (err, quote) {
+            const shipment = new Shipment({
+              schedule: mongoose.Types.ObjectId(args.scheduleId),
+              bookedBy: mongoose.Types.ObjectId(args.companyId),
+              bookingRequest: {
+                form: savedBookingRequest,
+                status: BOOKING_STATUS[0],
+              },
+              billInstruction: {
+                status: BOL_STATUS[0]
+              },
+              invoice: {
+                status: INVOICE_STATUS[0]
+              },
+            })
+            return shipment.save();
+          });
         });
       }
     },
@@ -151,6 +160,39 @@ const Mutation = new GraphQLObjectType({
             { $set: { 
               "billInstruction.form": savedBillInstruction,
               "billInstruction.status": BOL_STATUS[2],
+            } },
+            { new: true },
+            function (err, data) {
+              console.log(err);
+            }
+          );
+        })
+      }
+    },
+    createInvoice: {
+      type: InvoiceType,
+      args: {
+        shipmentId: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
+        invoice: {
+          type: new GraphQLNonNull(InvoiceInputType)
+        }, 
+        finance: {
+          type: new GraphQLNonNull(FinanceInputType)
+        }
+      },
+      resolve(parent, args) { 
+        const invoice = new Invoice(args.invoice);
+        return invoice.save((err, savedInvoice) => {
+          Shipment.findOneAndUpdate(
+            {_id: args.shipmentId},
+            { $set: { 
+              invoice: {
+                confirmation: savedInvoice,
+                status: INVOICE_STATUS[1]
+              },
+              finance: args.finance
             } },
             { new: true },
             function (err, data) {

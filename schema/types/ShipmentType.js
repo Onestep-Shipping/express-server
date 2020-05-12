@@ -16,7 +16,7 @@ const BookingRequestType = require('./BookingRequestType');
 const BookingConfirmationType = require('./BookingConfirmationType');
 const BillInstructionType = require('./BillInstructionType');
 const InvoiceType = require('./InvoiceType');
-
+const FinanceType = require('./FinanceType');
 
 const ShipmentType = new GraphQLObjectType({
   name: 'ShipmentType',
@@ -37,7 +37,7 @@ const ShipmentType = new GraphQLObjectType({
       type: new GraphQLNonNull(InvoiceDataType)
     },
     finance: {
-      type: new GraphQLNonNull(FinanceDataType)
+      type: new GraphQLNonNull(FinanceType)
     },
   })
 });
@@ -80,21 +80,6 @@ const InvoiceDataType = new GraphQLObjectType({
     },
     status: {
       type: new GraphQLNonNull(GraphQLString)
-    },
-  })
-}); 
-
-const FinanceDataType = new GraphQLObjectType({
-  name: 'FinanceDataType',
-  fields: () => ({
-    cost: {
-      type: new GraphQLNonNull(GraphQLFloat)
-    },
-    revenue: {
-      type: new GraphQLNonNull(GraphQLFloat)
-    },
-    profit: {
-      type: new GraphQLNonNull(GraphQLFloat)
     },
   })
 }); 
