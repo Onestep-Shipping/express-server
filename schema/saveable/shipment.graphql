@@ -1,4 +1,3 @@
-
 mutation {
   createBookingRequestAndInitShipment(
     companyId: "5eb5f824719c6b5e7aa975c6",

@@ -9,6 +9,7 @@ const Shipment = require('../models/Shipment');
 const Company = require('../models/Company');
 const BookingConfirmation = require('../models/BookingConfirmation');
 const BillInstruction = require('../models/BillInstruction');
+const Invoice = require('../models/Invoice');
 
 const calculateCost = require('../utils/calculateCost.js');
 
@@ -24,6 +25,8 @@ const {
   QuoteType,
   QuoteInputType,
   ShipmentType,
+  InvoiceType,
+  InvoiceInputType,
 } = require('./types/index.js');
 
 const {
@@ -104,11 +107,9 @@ const Mutation = new GraphQLObjectType({
                 status: BOL_STATUS[0]
               },
               invoice: {
-                status: INVOICE_STATUS[0]
+                status: INVOICE_STATUS[0],
+                tempCost: calculateCost(quote.buying, bookingRequest.containers)
               },
-              finance: {
-                cost: calculateCost(quote.buying, bookingRequest.containers)
-              }
             })
             return shipment.save();
           });
@@ -171,7 +172,7 @@ const Mutation = new GraphQLObjectType({
       }
     },
     createInvoice: {
-      type: ShipmentType,
+      type: InvoiceType,
       args: {
         shipmentId: {
           type: new GraphQLNonNull(GraphQLString)
@@ -179,26 +180,29 @@ const Mutation = new GraphQLObjectType({
         pdf: {
           type: new GraphQLNonNull(GraphQLString)
         }, 
-        revenue: {
-          type: new GraphQLNonNull(GraphQLFloat)
-        },
-        profit: {
-          type: new GraphQLNonNull(GraphQLFloat)
+        invoice: {
+          type: new GraphQLNonNull(InvoiceInputType)
         }
       },
       resolve(parent, args) { 
-        return Shipment.findOneAndUpdate(
-          {_id: args.shipmentId},
-          { $set: { 
-            invoice: { pdf: args.pdf, status: INVOICE_STATUS[1] },
-            "finance.revenue": args.revenue,
-            "finance.profit": args.profit,
-          } },
-          { new: true },
-          function (err, data) {
-            console.log(err);
-          }
-        );
+        const invoice = new Invoice(args.invoice);
+        return invoice.save(function(err, savedInvoice) {
+          Shipment.findOneAndUpdate(
+            {_id: args.shipmentId},
+            { $set: { 
+                invoice: { 
+                  form: savedInvoice,
+                  pdf: args.pdf, 
+                  status: INVOICE_STATUS[1],
+                },
+              } 
+            },
+            { new: true },
+            function (err, data) {
+              console.log(err);
+            }
+          );
+        })
       }
     },
     rollShipment: {

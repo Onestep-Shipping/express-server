@@ -3,11 +3,12 @@ const graphql = require('graphql');
 const {
   GraphQLObjectType,
   GraphQLFloat,
+  GraphQLString,
   GraphQLNonNull
 } = graphql;
 
-const FinanceType = new GraphQLObjectType({
-  name: 'FinanceType',
+const InvoiceType = new GraphQLObjectType({
+  name: 'InvoiceType',
   fields: () => ({
     cost: {
       type: new GraphQLNonNull(GraphQLFloat)
@@ -21,4 +22,4 @@ const FinanceType = new GraphQLObjectType({
   })
 }); 
 
-module.exports = FinanceType;
+module.exports = InvoiceType;

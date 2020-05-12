@@ -10,6 +10,8 @@ const BookingConfirmationType = require('./BookingConfirmationType.js');
 const BookingConfirmationInputType = require('./BookingConfirmationInputType.js');
 const BillInstructionType = require('./BillInstructionType.js');
 const BillInstructionInputType = require('./BillInstructionInputType.js');
+const InvoiceType = require('./InvoiceType.js');
+const InvoiceInputType = require('./InvoiceInputType.js');
 
 module.exports = { 
   RouteType, 
@@ -27,4 +29,7 @@ module.exports = {
 
   BillInstructionType,
   BillInstructionInputType,
+
+  InvoiceType,
+  InvoiceInputType,
 }
