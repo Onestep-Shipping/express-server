@@ -1,0 +1,27 @@
+mutation {
+  createBookingConfirmation(
+    shipmentId: "5eba2f1cbc0c7198575f64bb",
+    bookingConfirmation: {
+      timeReceived: 1,
+      pdf: "./files/Booking Confirmation #1232154.pdf",
+      bookingNo: "1234567",
+      etd: "2020-07-01",
+      eta: "2020-07-30",
+      terminaCutoff: "2020-07-05T10:15:30Z",
+      docCutoff: "2020-07-05T10:15:30Z",
+      vgmCutoff: "2020-07-05T10:15:30Z",
+      pickUpLocation: {
+        street: "8237 Montcalm Street",
+        city: "Vancouver, BC, V6P 4P4",
+        country: "Canada"
+      },
+      returnLocation: {
+        street: "8237 Montcalm Street",
+        city: "Vancouver, BC, V6P 4P4",
+        country: "Canada"
+      },
+    }
+  ) {
+    timeReceived
+  }
+}
