@@ -171,6 +171,30 @@ const Mutation = new GraphQLObjectType({
         })
       }
     },
+    createBOL: {
+      type: ShipmentType,
+      args: {
+        shipmentId: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
+        pdf: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
+      },
+      resolve(parent, args) { 
+        return Shipment.findOneAndUpdate(
+          {_id: args.shipmentId},
+          { $set: { 
+            "billInstruction.pdf": args.pdf,
+            "billInstruction.status": BOL_STATUS[3],
+          } },
+          { new: true },
+          function (err, data) {
+            console.log(err);
+          }
+        );
+      }
+    },
     createInvoice: {
       type: InvoiceType,
       args: {
