@@ -1,5 +1,13 @@
 const mongoose = require('mongoose');
 
+const containerInfoSubSchema = {
+  containerNo: String,
+  seelNo: String, 
+  weight: mongoose.Decimal128,
+  measurement: mongoose.Decimal128,
+  vgm: mongoose.Decimal128
+}
+
 const BillInstructionSchema = new mongoose.Schema({
   shipper: {
     type: String,
@@ -40,14 +48,6 @@ const BillInstructionSchema = new mongoose.Schema({
 }, {
   timestamps: true
 });
-
-const containerInfoSubSchema = {
-  containerNo: String,
-  seelNo: String, 
-  weight: Schema.Types.Decimal128,
-  measurement: Schema.Types.Decimal128,
-  vgm: Schema.Types.Decimal128
-}
 
 const BillInstruction = mongoose.model('BillInstruction', BillInstructionSchema);
 
