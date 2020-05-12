@@ -10,7 +10,7 @@
 endobj
 4 0 obj
 <<
-/Length 3058
+/Length 4541
 >>
 stream
 0.20 w
@@ -26,36 +26,43 @@ BT
 /F6 20 Tf
 23.00 TL
 0 g
-186.00 692.00 Td
-(Booking Confirmation) Tj
+264.00 702.00 Td
+(Invoice) Tj
 ET
 BT
 /F5 12 Tf
 13.80 TL
 0 g
-50.00 652.00 Td
+50.00 662.00 Td
 (TO: Adidas) Tj
 ET
 BT
 /F5 12 Tf
 13.80 TL
 0 g
-50.00 634.00 Td
+50.00 644.00 Td
 (    8237 Montcalm Street) Tj
 ET
 BT
 /F5 12 Tf
 13.80 TL
 0 g
-50.00 619.00 Td
+50.00 629.00 Td
 (    Vancouver, BC, V6P 4P4) Tj
 ET
 BT
 /F5 12 Tf
 13.80 TL
 0 g
-50.00 604.00 Td
+50.00 614.00 Td
 (    Canada) Tj
+ET
+BT
+/F5 10 Tf
+11.50 TL
+0 g
+310.00 677.00 Td
+(Invoice No.      :                3242356) Tj
 ET
 BT
 /F5 10 Tf
@@ -96,217 +103,388 @@ ET
 560.000 592.000 l
 S
 BT
-/F5 11 Tf
-12.65 TL
-0 g
-80.00 562.00 Td
-(From: Vancouver, BC | CA) Tj
-ET
-BT
-/F5 11 Tf
-12.65 TL
-0 g
-350.00 562.00 Td
-(To: Vung Tau | VN) Tj
-ET
-BT
-/F5 11 Tf
-12.65 TL
-0 g
-80.00 542.00 Td
-(ETD: 04/21/2020) Tj
-ET
-BT
-/F5 11 Tf
-12.65 TL
-0 g
-350.00 542.00 Td
-(ETA: 04/21/2020) Tj
-ET
-BT
-/F5 11 Tf
-12.65 TL
-0 g
-80.00 502.00 Td
-(Commodity: Food) Tj
-ET
-BT
-/F5 11 Tf
-12.65 TL
-0 g
-350.00 502.00 Td
-(Q'ty) Tj
-ET
-BT
-/F5 11 Tf
-12.65 TL
-0 g
-420.00 502.00 Td
-(Container Type) Tj
-ET
-BT
-/F5 11 Tf
-12.65 TL
-0 g
-350.00 485.00 Td
-(1) Tj
-ET
-BT
-/F5 11 Tf
-12.65 TL
-0 g
-420.00 485.00 Td
-(1' Dry) Tj
-ET
-BT
-/F5 11 Tf
-12.65 TL
-0 g
-350.00 468.00 Td
-(1) Tj
-ET
-BT
-/F5 11 Tf
-12.65 TL
-0 g
-420.00 468.00 Td
-(1' Dry) Tj
-ET
-BT
-/F5 11 Tf
-12.65 TL
-0 g
-350.00 451.00 Td
-(1) Tj
-ET
-BT
-/F5 11 Tf
-12.65 TL
-0 g
-420.00 451.00 Td
-(1' Dry) Tj
-ET
-BT
 /F6 12 Tf
 13.80 TL
 0 g
-80.00 462.00 Td
-(Booking No.: 1232154) Tj
+80.00 562.00 Td
+(Booking No.: 5764235) Tj
 ET
 BT
 /F5 11 Tf
+12.65 TL
+0 g
+80.00 532.00 Td
+(From: undefined) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+350.00 532.00 Td
+(To: undefined) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+80.00 512.00 Td
+(ETD: undefined) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+350.00 512.00 Td
+(ETA: undefined) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+80.00 472.00 Td
+(Commodity: Scrap paper) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+350.00 472.00 Td
+(Order Number: 12345) Tj
+ET
+BT
+/F6 11 Tf
 12.65 TL
 0 g
 80.00 432.00 Td
-(Carrier Name: Hapag-Lloyd) Tj
+(Description) Tj
+ET
+BT
+/F6 11 Tf
+12.65 TL
+0 g
+200.00 432.00 Td
+(Q'ty) Tj
+ET
+BT
+/F6 11 Tf
+12.65 TL
+0 g
+250.00 432.00 Td
+(Container) Tj
+ET
+BT
+/F6 11 Tf
+12.65 TL
+0 g
+350.00 432.00 Td
+(Price \(USD\)) Tj
+ET
+BT
+/F6 11 Tf
+12.65 TL
+0 g
+450.00 432.00 Td
+(Total \(USD\)) Tj
 ET
 BT
 /F5 11 Tf
 12.65 TL
 0 g
-80.00 392.00 Td
-(Terminal Cut-off: 05/11/2020 00:00) Tj
+80.00 415.00 Td
+(Ocean Freight) Tj
 ET
 BT
 /F5 11 Tf
 12.65 TL
 0 g
-80.00 372.00 Td
-(Document Cut-off: 05/11/2020 00:00) Tj
+200.00 415.00 Td
+(1) Tj
 ET
 BT
 /F5 11 Tf
 12.65 TL
 0 g
-80.00 352.00 Td
-(VGM Cut-off     : 05/11/2020 00:00) Tj
+250.00 415.00 Td
+(40' Dry) Tj
 ET
 BT
-/F6 12 Tf
-13.80 TL
+/F5 11 Tf
+12.65 TL
 0 g
-80.00 309.00 Td
-(Empty Pickup Location) Tj
+350.00 415.00 Td
+($12312) Tj
 ET
 BT
-/F6 12 Tf
-13.80 TL
+/F5 11 Tf
+12.65 TL
 0 g
-350.00 309.00 Td
-(Return Location) Tj
+450.00 415.00 Td
+($12,312) Tj
 ET
 BT
-/F5 10 Tf
-11.50 TL
+/F5 11 Tf
+12.65 TL
 0 g
-80.00 292.00 Td
-(8237 Montcalm Street) Tj
+80.00 398.00 Td
+(Ocean Freight) Tj
 ET
 BT
-/F5 10 Tf
-11.50 TL
+/F5 11 Tf
+12.65 TL
 0 g
-350.00 292.00 Td
-(8237 Montcalm Street) Tj
+200.00 398.00 Td
+(1) Tj
 ET
 BT
-/F5 10 Tf
-11.50 TL
+/F5 11 Tf
+12.65 TL
 0 g
-80.00 277.00 Td
-(Vancouver) Tj
+250.00 398.00 Td
+(40' Dry) Tj
 ET
 BT
-/F5 10 Tf
-11.50 TL
+/F5 11 Tf
+12.65 TL
 0 g
-350.00 277.00 Td
-(Vancouver) Tj
+350.00 398.00 Td
+($12) Tj
 ET
 BT
-/F5 10 Tf
-11.50 TL
+/F5 11 Tf
+12.65 TL
 0 g
-80.00 262.00 Td
-(BC) Tj
+450.00 398.00 Td
+($12) Tj
 ET
 BT
-/F5 10 Tf
-11.50 TL
+/F5 11 Tf
+12.65 TL
 0 g
-350.00 262.00 Td
-(Canada) Tj
+80.00 381.00 Td
+(Ocean Freight) Tj
 ET
-50.000 232.000 m 
-560.000 232.000 l
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+200.00 381.00 Td
+(1) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+250.00 381.00 Td
+(40' Dry) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+350.00 381.00 Td
+($12) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+450.00 381.00 Td
+($12) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+80.00 364.00 Td
+(Ocean Freight) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+200.00 364.00 Td
+(1) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+250.00 364.00 Td
+(40' Dry) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+350.00 364.00 Td
+($12) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+450.00 364.00 Td
+($12) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+80.00 347.00 Td
+(Ocean Freight) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+200.00 347.00 Td
+(1) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+250.00 347.00 Td
+(40' Dry) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+350.00 347.00 Td
+($12) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+450.00 347.00 Td
+($12) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+80.00 330.00 Td
+(Document) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+200.00 330.00 Td
+(1) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+350.00 330.00 Td
+($123) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+450.00 330.00 Td
+($123) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+80.00 313.00 Td
+(Administration) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+200.00 313.00 Td
+(1) Tj
+ET
+80.000 303.000 m 
+560.000 303.000 l
 S
 BT
+/F5 11 Tf
+12.65 TL
+0 g
+350.00 289.00 Td
+(Sub Total: ) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+450.00 289.00 Td
+($15,825) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+350.00 313.00 Td
+($3342) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+450.00 313.00 Td
+($3,342) Tj
+ET
+BT
 /F6 12 Tf
 13.80 TL
 0 g
-50.00 212.00 Td
-(Note:) Tj
+80.00 262.00 Td
+(Bank Information - RBC Bank) Tj
 ET
 BT
 /F5 11 Tf
 12.65 TL
 0 g
-50.00 187.00 Td
-(Terminal cut-off may change. The trucker has to check with the terminal prior) Tj
+80.00 242.00 Td
+(Branch No.       : 12345) Tj
 ET
 BT
 /F5 11 Tf
 12.65 TL
 0 g
-50.00 167.00 Td
-(to return.) Tj
+80.00 225.00 Td
+(Institution No.  : 003) Tj
 ET
 BT
 /F5 11 Tf
 12.65 TL
 0 g
-50.00 122.00 Td
-(Best regards,) Tj
+80.00 208.00 Td
+(Account No. \(USD\): 1234567) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+80.00 191.00 Td
+(Account No.      : 2345678) Tj
+ET
+50.000 167.000 m 
+560.000 167.000 l
+S
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+50.00 142.00 Td
+(Please make Transfer to OneStep Shipping as soon as you receive this invoice.) Tj
+ET
+BT
+/F5 11 Tf
+12.65 TL
+0 g
+50.00 102.00 Td
+(Thank you & Best regards,) Tj
 ET
 BT
 /F5 11 Tf
@@ -487,12 +665,12 @@ endobj
 19 0 obj
 <<
 /Producer (jsPDF 1.5.3)
-/Title (Booking Confirmation #1232154)
+/Title (Invoice #5764235)
 /Subject (Info about PDF)
 /Author (Scarlet Nguyen)
 /Keywords (generated, javascript, web 2.0, ajax)
 /Creator (OneStep Shipping)
-/CreationDate (D:20200511191739-07'00')
+/CreationDate (D:20200511191515-07'00')
 >>
 endobj
 20 0 obj
@@ -506,33 +684,33 @@ endobj
 xref
 0 21
 0000000000 65535 f 
-0000003234 00000 n 
-0000005051 00000 n 
+0000004717 00000 n 
+0000006534 00000 n 
 0000000015 00000 n 
 0000000124 00000 n 
-0000003291 00000 n 
-0000003416 00000 n 
-0000003546 00000 n 
-0000003679 00000 n 
-0000003816 00000 n 
-0000003939 00000 n 
-0000004068 00000 n 
-0000004200 00000 n 
-0000004336 00000 n 
-0000004464 00000 n 
-0000004591 00000 n 
-0000004720 00000 n 
-0000004853 00000 n 
-0000004955 00000 n 
+0000004774 00000 n 
+0000004899 00000 n 
+0000005029 00000 n 
+0000005162 00000 n 
 0000005299 00000 n 
-0000005552 00000 n 
+0000005422 00000 n 
+0000005551 00000 n 
+0000005683 00000 n 
+0000005819 00000 n 
+0000005947 00000 n 
+0000006074 00000 n 
+0000006203 00000 n 
+0000006336 00000 n 
+0000006438 00000 n 
+0000006782 00000 n 
+0000007022 00000 n 
 trailer
 <<
 /Size 21
 /Root 20 0 R
 /Info 19 0 R
-/ID [ <D0D413AFF29BD583EB51EF51C1E190AE> <D0D413AFF29BD583EB51EF51C1E190AE> ]
+/ID [ <A57F309E773D40AE30073803F0BA912E> <A57F309E773D40AE30073803F0BA912E> ]
 >>
 startxref
-5656
+7126
 %%EOF
