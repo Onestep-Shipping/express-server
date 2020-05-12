@@ -1,7 +1,7 @@
 const graphql = require('graphql');
 
 const {
-  GraphQLObjectType,
+  GraphQLInputObjectType,
   GraphQLString,
   GraphQLInt,
   GraphQLNonNull
@@ -14,7 +14,7 @@ const {
 
 const AddressInputType = require('./AddressInputType.js');
 
-const BookingConfirmationInputType = new GraphQLObjectType({
+const BookingConfirmationInputType = new GraphQLInputObjectType({
   name: 'BookingConfirmationInputType',
   fields: () => ({
     timeReceived: {

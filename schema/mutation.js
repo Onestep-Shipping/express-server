@@ -7,6 +7,7 @@ const Schedule = require('../models/Schedule');
 const BookingRequest = require('../models/BookingRequest');
 const Shipment = require('../models/Shipment');
 const Company = require('../models/Company');
+const BookingConfirmation = require('../models/BookingConfirmation');
 
 const { BOOKING_STATUS, BOL_STATUS, INVOICE_STATUS } = require('../constants/Status');
 
@@ -131,14 +132,16 @@ const Mutation = new GraphQLObjectType({
       },
       resolve(parent, args) { 
         const bookingConfirmation = new BookingConfirmation(args.bookingConfirmation);
-        return Shipment.findOneAndUpdate(
-          {_id: args.shipmentId},
-          { $set: { bookingRequest: { confirmation: bookingConfirmation } } },
-          { new: true },
-          function (err, data) {
-            console.log(err);
-          }
-        )
+        bookingConfirmation.save((err, savedBookingConfirmation) => {
+          return Shipment.findOneAndUpdate(
+            {_id: args.shipmentId},
+            { $set: { "bookingRequest.confirmation": savedBookingConfirmation } },
+            { new: true },
+            function (err, data) {
+              console.log(err);
+            }
+          );
+        })
       }
     }
   }
