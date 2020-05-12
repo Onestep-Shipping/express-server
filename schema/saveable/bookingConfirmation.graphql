@@ -1,6 +1,6 @@
 mutation {
   createBookingConfirmation(
-    shipmentId: "5eba2f1cbc0c7198575f64bb",
+    shipmentId: "5ebb05b796e497c37a43fa14",
     bookingConfirmation: {
       timeReceived: 1,
       pdf: "./files/Booking Confirmation #1232154.pdf",

@@ -1,14 +1,14 @@
 const graphql = require('graphql');
 
 const {
-  GraphQLObjectType,
+  GraphQLInputObjectType,
   GraphQLFloat,
   GraphQLString,
   GraphQLNonNull
 } = graphql;
 
-const InvoiceType = new GraphQLObjectType({
-  name: 'InvoiceType',
+const InvoiceInputType = new GraphQLInputObjectType({
+  name: 'InvoiceInputType',
   fields: () => ({
     cost: {
       type: new GraphQLNonNull(GraphQLFloat)
@@ -22,4 +22,4 @@ const InvoiceType = new GraphQLObjectType({
   })
 }); 
 
-module.exports = InvoiceType;
+module.exports = InvoiceInputType;

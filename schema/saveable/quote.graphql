@@ -53,47 +53,49 @@ mutation {
   addQuoteToSchedules(
     routeId: "CAVAN-SGSIN",
     carrier: "OOCL",
-    validity: {
-      startDate: "2020-07-01",
-      endDate: "2020-07-31"
-    },
-    buying: {
-      oceanFreight: [
-        {
-          containerType: "20' Dry",
-          price: 750
-        },
-        {
-          containerType: "40' Dry",
-          price: 1000
-        },
-        {
-          containerType: "40'HC Dry",
-          price: 1200
-        },
-      ],
-      docFee: 80,
-      adminFee: 0
-    },
-    selling: {
-      oceanFreight: [
-        {
-          containerType: "20' Dry",
-          price: 950
-        },
-        {
-          containerType: "40' Dry",
-          price: 1200
-        },
-        {
-          containerType: "40'HC Dry",
-          price: 1500
-        },
-      ],
-      docFee: 100,
-      adminFee: 30
-    },
-    except: "Garment, Waste, Agricural Products"
+    quote: {
+      validity: {
+        startDate: "2020-07-01",
+        endDate: "2020-07-31"
+      },
+      buying: {
+        oceanFreight: [
+          {
+            containerType: "20' Dry",
+            price: 750
+          },
+          {
+            containerType: "40' Dry",
+            price: 1000
+          },
+          {
+            containerType: "40'HC Dry",
+            price: 1200
+          },
+        ],
+        docFee: 80,
+        adminFee: 0
+      },
+      selling: {
+        oceanFreight: [
+          {
+            containerType: "20' Dry",
+            price: 950
+          },
+          {
+            containerType: "40' Dry",
+            price: 1200
+          },
+          {
+            containerType: "40'HC Dry",
+            price: 1500
+          },
+        ],
+        docFee: 100,
+        adminFee: 30
+      },
+      except: "Garment, Waste, Agricural Products"
+    }
   ) {
     validity {
       startDate, endDate

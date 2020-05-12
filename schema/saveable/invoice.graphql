@@ -1,0 +1,13 @@
+mutation {
+  createInvoice(
+    shipmentId: "5ebb1425e9a544cef2d0c8d6",
+    pdf: "./files/Invoice #5764235.pdf"
+    invoice: {
+      cost: 6430,
+      revenue: 8000,
+      profit: 1570
+    }
+  ) {
+    cost, revenue, profit
+  }
+}

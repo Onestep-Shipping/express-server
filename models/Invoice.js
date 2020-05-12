@@ -1,19 +1,15 @@
 const mongoose = require('mongoose');
 
 const InvoiceSchema = new mongoose.Schema({
-  pdf: {
-    type: String,
+  cost: {
+    type: mongoose.Decimal128,
     required: true,
   },
-  price: {
-    type: [mongoose.Decimal128],
+  revenue: {
+    type: mongoose.Decimal128,
     required: true,
   },
-  total: {
-    type: [mongoose.Decimal128],
-    required: true,
-  },
-  subTotal: {
+  profit: {
     type: mongoose.Decimal128,
     required: true,
   },
@@ -23,4 +19,4 @@ const InvoiceSchema = new mongoose.Schema({
 
 const Invoice = mongoose.model('Invoice', InvoiceSchema);
 
-module.exports = Invoice;
+module.exports = Invoice; 

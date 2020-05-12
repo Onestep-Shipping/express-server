@@ -29,17 +29,14 @@ const ShipmentSchema = new mongoose.Schema({
     status: String,
   },
   invoice: {
-    confirmation: {
+    form: {
       type: mongoose.Schema.Types.ObjectId, 
       ref: 'Invoice'
     },
+    pdf: String,
+    tempCost: mongoose.Decimal128,
     status: String,
   },
-  finance: {
-    cost: mongoose.Decimal128,
-    revenue: mongoose.Decimal128,
-    profit: mongoose.Decimal128
-  }
 });
 
 const Shipment = mongoose.model('Shipment', ShipmentSchema);
