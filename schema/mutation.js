@@ -134,7 +134,28 @@ const Mutation = new GraphQLObjectType({
         })
       }
     }
-  }
+  },
+  rollSchedule: {
+    type: ShipmentType,
+    args: {
+      shipmentId: {
+        type: new GraphQLNonNull(GraphQLString)
+      },
+      newScheduleId: {
+        type: new GraphQLNonNull(GraphQLString)
+      }
+    },
+    resolve(parent, args) { 
+      return Shipment.findOneAndUpdate(
+        {_id: args.shipmentId},
+        { $set: { schedule: mongoose.Types.ObjectId(newScheduleId) } },
+        { new: true },
+        function (err, data) {
+          console.log(err);
+        }
+      );
+    }
+  },
 })
 
 module.exports = Mutation;
