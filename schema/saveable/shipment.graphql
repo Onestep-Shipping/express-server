@@ -36,3 +36,25 @@ mutation {
     }
   }
 }
+
+mutation {
+  rollShipment(
+    shipmentId: "5ebae39a7108b3b15032dee2",
+    newScheduleId: "5eb5f824719c6b5e7aa975cb"
+  ) {
+    schedule {
+      startDate
+    }
+  }
+}
+
+mutation {
+  cancelShipment(
+    shipmentId: "5ebae39a7108b3b15032dee2",
+  ) {
+    schedule {
+      startDate
+    }
+  }
+}
+
