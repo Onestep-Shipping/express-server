@@ -29,10 +29,7 @@ const ShipmentSchema = new mongoose.Schema({
     status: String,
   },
   invoice: {
-    confirmation: {
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: 'Invoice'
-    },
+    pdf: String,
     status: String,
   },
   finance: {

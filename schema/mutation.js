@@ -9,7 +9,6 @@ const Shipment = require('../models/Shipment');
 const Company = require('../models/Company');
 const BookingConfirmation = require('../models/BookingConfirmation');
 const BillInstruction = require('../models/BillInstruction');
-const Invoice = require('../models/Invoice');
 
 const calculateCost = require('../utils/calculateCost.js');
 
@@ -25,8 +24,6 @@ const {
   QuoteType,
   QuoteInputType,
   ShipmentType,
-  InvoiceType,
-  InvoiceInputType,
 } = require('./types/index.js');
 
 const {
@@ -174,13 +171,13 @@ const Mutation = new GraphQLObjectType({
       }
     },
     createInvoice: {
-      type: InvoiceType,
+      type: ShipmentType,
       args: {
         shipmentId: {
           type: new GraphQLNonNull(GraphQLString)
         },
-        invoice: {
-          type: new GraphQLNonNull(InvoiceInputType)
+        pdf: {
+          type: new GraphQLNonNull(GraphQLString)
         }, 
         revenue: {
           type: new GraphQLNonNull(GraphQLFloat)
@@ -190,24 +187,21 @@ const Mutation = new GraphQLObjectType({
         }
       },
       resolve(parent, args) { 
-        const invoice = new Invoice(args.invoice);
-        return invoice.save((err, savedInvoice) => {
-          Shipment.findOneAndUpdate(
-            {_id: args.shipmentId},
-            { $set: { 
-              invoice: {
-                confirmation: savedInvoice,
-                status: INVOICE_STATUS[1]
-              },
-              "finance.revenue": args.revenue,
-              "finance.profit": args.profit,
-            } },
-            { new: true },
-            function (err, data) {
-              console.log(err);
-            }
-          );
-        })
+        return Shipment.findOneAndUpdate(
+          {_id: args.shipmentId},
+          { $set: { 
+            invoice: {
+              pdf: args.pdf,
+              status: INVOICE_STATUS[1]
+            },
+            "finance.revenue": args.revenue,
+            "finance.profit": args.profit,
+          } },
+          { new: true },
+          function (err, data) {
+            console.log(err);
+          }
+        );
       }
     },
     rollShipment: {
