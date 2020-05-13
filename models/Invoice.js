@@ -2,15 +2,15 @@ const mongoose = require('mongoose');
 
 const InvoiceSchema = new mongoose.Schema({
   cost: {
-    type: mongoose.Decimal128,
+    type: Number,
     required: true,
   },
   revenue: {
-    type: mongoose.Decimal128,
+    type: Number,
     required: true,
   },
   profit: {
-    type: mongoose.Decimal128,
+    type: Number,
     required: true,
   },
 }, {

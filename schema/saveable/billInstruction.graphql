@@ -10,9 +10,16 @@ mutation {
         {
           containerNo: "12345LQW",
           seelNo: "76538",
-          weight: 100.0,
-          measurement: 200.0,
-          vgm: 300.0,
+          weight: 100.12,
+          measurement: 200.35,
+          vgm: 300.35,
+        },
+        {
+          containerNo: "633466KSD",
+          seelNo: "643241",
+          weight: 600.64,
+          measurement: 700.75,
+          vgm: 800.02,
         }
       ],
       orderNo: "934927",

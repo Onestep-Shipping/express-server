@@ -58,3 +58,149 @@ mutation {
   }
 }
 
+# FOR BOOKING REQUEST ADMIN
+query {
+  getAllShipments(sortBy: "bookingRequest") {
+    schedule {
+      route {
+        startLocation, endLocation, carrier, 
+        quoteHistory {
+          validity {
+            startDate, endDate
+          },
+          selling {
+            oceanFreight {
+              containerType,
+              price
+            },
+            docFee, adminFee
+          },
+        }
+      }
+      startDate, 
+      endDate, 
+      transitTime, 
+      transshipment, 
+      vessels
+    },
+    bookedBy {
+      name,
+      personInCharge {
+        name
+      },
+      email
+    },
+    bookingRequest {
+      form {
+        commodity, hsCode, 
+        containers {
+          containerType, quantity
+        },
+        paymentTerm, autoFilling, createdAt
+      }, 
+      status
+    },
+  }
+}
+
+# FOR BILL INSTRUCTION ADMIN
+query {
+  getAllShipments(sortBy: "billInstruction") {
+    schedule {
+      route {
+        startLocation, endLocation, 
+        quoteHistory {
+          validity {
+            startDate, endDate
+          },
+          selling {
+            oceanFreight {
+              containerType,
+              price
+            },
+            docFee, adminFee
+          },
+        }
+      }
+      startDate, 
+      endDate, 
+      vessels
+    },
+    bookedBy {
+      name,
+      personInCharge {
+        name
+      },
+      email
+    },
+    billInstruction {
+      form {
+        shipper,
+        consignee,
+        notify,
+        description,
+        containers {
+          containerNo, seelNo, weight, measurement, vgm
+        }
+        orderNo,
+        hsCode,
+        caedNo,
+        cargoValue,
+        createdAt
+      }
+      status
+    }
+  }
+}
+
+# FOR INVOICE ADMIN
+query {
+  getAllShipments(sortBy: "billInstruction") {
+    schedule {
+      route {
+        startLocation, endLocation, carrier, 
+        quoteHistory {
+          validity {
+            startDate, endDate
+          },
+          buying {
+            oceanFreight {
+              containerType,
+              price
+            },
+            docFee, adminFee
+          },
+          selling {
+            oceanFreight {
+              containerType,
+              price
+            },
+            docFee, adminFee
+          },
+        }
+      }
+      startDate, 
+      endDate, 
+      transitTime, 
+      transshipment, 
+      vessels
+    },
+    bookedBy {
+      name,
+      personInCharge {
+        name
+      },
+      email
+    },
+    bookingRequest {
+      confirmation { bookingNo },
+      form { commodity },
+    },
+    billInstruction {
+      form { orderNo }
+    }
+    invoice {
+      tempCost
+    }
+  }
+}

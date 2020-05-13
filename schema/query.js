@@ -104,8 +104,13 @@ const RootQuery = new GraphQLObjectType({
         })
       }
     },
-    getAllShipmentsForBookingRequest: {
+    getAllShipments: {
       type: new GraphQLList(ShipmentType),
+      args: {
+        sortBy: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
+      },
       resolve(parent, args) {
         return Shipment.find({})
           .populate({ 
@@ -113,13 +118,15 @@ const RootQuery = new GraphQLObjectType({
             populate: {
               path: 'route',
               populate: {
-                path: "'quoteHistory"
+                path: 'quoteHistory'
               }
             } 
           })
           .populate('bookedBy')
           .populate('bookingRequest.form')
-          .sort({ "bookingRequest.createdAt": 1 });
+          .populate('bookingRequest.confirmation')
+          .populate('billInstruction.form')
+          .sort({ [args.sortBy + ".createdAt"]: 1 });
       }
     },
   }

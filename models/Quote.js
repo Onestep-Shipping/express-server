@@ -7,10 +7,10 @@ const validitySubSchema = {
 const priceSubSchema = {
   oceanFreight: [{
     containerType: String,
-    price: mongoose.Decimal128,
+    price: Number,
   }], 
-  docFee: mongoose.Decimal128,
-  adminFee: mongoose.Decimal128
+  docFee: Number,
+  adminFee: Number
 }
 
 const QuoteSchema = new mongoose.Schema({

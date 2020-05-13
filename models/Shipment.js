@@ -34,7 +34,7 @@ const ShipmentSchema = new mongoose.Schema({
       ref: 'Invoice'
     },
     pdf: String,
-    tempCost: mongoose.Decimal128,
+    tempCost: Number,
     status: String,
   },
 }, {

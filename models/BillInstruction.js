@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const containerInfoSubSchema = {
   containerNo: String,
   seelNo: String, 
-  weight: mongoose.Decimal128,
-  measurement: mongoose.Decimal128,
-  vgm: mongoose.Decimal128
+  weight: Number,
+  measurement: Number,
+  vgm: Number
 }
 
 const BillInstructionSchema = new mongoose.Schema({
