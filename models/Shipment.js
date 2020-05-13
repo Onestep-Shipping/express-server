@@ -37,6 +37,8 @@ const ShipmentSchema = new mongoose.Schema({
     tempCost: mongoose.Decimal128,
     status: String,
   },
+}, {
+  timestamps: true
 });
 
 const Shipment = mongoose.model('Shipment', ShipmentSchema);

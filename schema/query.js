@@ -5,6 +5,7 @@ const Quote = require('../models/Quote');
 const Schedule = require('../models/Schedule');
 const Shipment = require('../models/Shipment');
 const Company = require('../models/Company');
+const BookingRequest = require('../models/BookingRequest');
 
 const { 
   RouteType,
@@ -101,6 +102,24 @@ const RootQuery = new GraphQLObjectType({
           })
           .sort({transshipment: 1, startDate: 1});
         })
+      }
+    },
+    getAllShipmentsForBookingRequest: {
+      type: new GraphQLList(ShipmentType),
+      resolve(parent, args) {
+        return Shipment.find({})
+          .populate({ 
+            path: 'schedule',
+            populate: {
+              path: 'route',
+              populate: {
+                path: "'quoteHistory"
+              }
+            } 
+          })
+          .populate('bookedBy')
+          .populate('bookingRequest.form')
+          .sort({ "bookingRequest.createdAt": 1 });
       }
     },
   }

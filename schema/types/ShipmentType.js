@@ -10,6 +10,11 @@ const {
   GraphQLNonNull
 } = graphql;
 
+const {
+  GraphQLDate,
+  GraphQLDateTime
+} = require('graphql-iso-date');
+
 const ScheduleType = require('./ScheduleType');
 const CompanyType = require('./CompanyType');
 const BookingRequestType = require('./BookingRequestType');
@@ -35,6 +40,9 @@ const ShipmentType = new GraphQLObjectType({
     invoice: {
       type: new GraphQLNonNull(InvoiceDataType)
     },
+    createdAt: {
+      type: new GraphQLNonNull(GraphQLDateTime)
+    }
   })
 });
 

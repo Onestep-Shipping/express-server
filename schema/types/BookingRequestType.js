@@ -9,6 +9,11 @@ const {
   GraphQLNonNull
 } = graphql;
 
+const {
+  GraphQLDate,
+  GraphQLDateTime
+} = require('graphql-iso-date');
+
 const BookingRequestType = new GraphQLObjectType({
   name: 'BookingRequestType',
   fields: () => ({
@@ -27,6 +32,9 @@ const BookingRequestType = new GraphQLObjectType({
     autoFilling: {
       type: new GraphQLNonNull(GraphQLBoolean)
     },
+    createdAt: {
+      type: new GraphQLNonNull(GraphQLDateTime)
+    }
   })
 });
 
