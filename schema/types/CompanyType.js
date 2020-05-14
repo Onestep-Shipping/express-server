@@ -7,6 +7,11 @@ const {
   GraphQLNonNull
 } = graphql;
 
+const {
+  GraphQLDate,
+  GraphQLDateTime
+} = require('graphql-iso-date');
+
 const AddressType = require('./AddressType.js');
 
 const CompanyType = new GraphQLObjectType({
@@ -33,6 +38,9 @@ const CompanyType = new GraphQLObjectType({
     shipments: {
       type: new GraphQLList(require('./ShipmentType.js')) // To prevent circular dependencies problem between Company and Shipments
     },
+    createdAt: {
+      type: new GraphQLNonNull(GraphQLDateTime)
+    }
   })
 });
 

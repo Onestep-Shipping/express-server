@@ -41,6 +41,19 @@ const RootQuery = new GraphQLObjectType({
         return Company.find({});
       }
     },
+    getMyShipments: {
+      type: new GraphQLList(ShipmentType),
+      args: {
+        companyId: new GraphQLNonNull(GraphQLString)
+      },
+      resolve(parent, args) {
+        return Company.findById(args.companyId)
+        .populate('shipments')
+        .then(company => {
+          return company.shipments
+        })
+      }
+    },
     getQuoteHistory: {
       type: new GraphQLList(QuoteType),
       args: {

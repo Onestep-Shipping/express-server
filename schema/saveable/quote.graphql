@@ -114,5 +114,6 @@ mutation {
       },
       docFee, adminFee
     },
+    except
   }
 }
