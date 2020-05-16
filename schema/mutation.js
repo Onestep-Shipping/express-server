@@ -77,7 +77,7 @@ const Mutation = new GraphQLObjectType({
       }
     },
     createBookingRequestAndInitShipment: {
-      type: ShipmentType,
+      type: GraphQLString,
       args: {
         companyId: {
           type: new GraphQLNonNull(GraphQLString)
@@ -111,7 +111,20 @@ const Mutation = new GraphQLObjectType({
                 tempCost: calculateCost(quote.buying, bookingRequest.containers)
               },
             })
-            return shipment.save();
+            shipment.save(function(error, result){
+              if (result) {
+                Company.findOneAndUpdate(
+                  { _id: args.args.companyId },
+                  { $push: { shipments: result } },
+                  { new: true },
+                  function (err, data) {
+                    if (data) {
+                      return "OK";
+                    }
+                  }
+                )
+              }
+            });
           });
         });
       }
