@@ -16,6 +16,9 @@ const {
 const QuoteType = new GraphQLObjectType({
   name: 'QuoteType',
   fields: () => ({
+    _id: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
     validity: {
       type: new GraphQLNonNull(ValidityType)
     },

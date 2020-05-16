@@ -44,7 +44,9 @@ const RootQuery = new GraphQLObjectType({
     getMyShipments: {
       type: new GraphQLList(ShipmentType),
       args: {
-        companyId: new GraphQLNonNull(GraphQLString)
+        companyId: {
+          type: new GraphQLNonNull(GraphQLString)
+        }
       },
       resolve(parent, args) {
         return Company.findById(args.companyId)

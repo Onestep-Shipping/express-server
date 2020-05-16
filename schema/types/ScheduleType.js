@@ -18,6 +18,9 @@ const RouteType = require('./RouteType.js');
 const ScheduleType = new GraphQLObjectType({
   name: 'ScheduleType',
   fields: () => ({
+    _id: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
     route: {
       type: new GraphQLNonNull(RouteType)
     },
