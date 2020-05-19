@@ -51,7 +51,7 @@ const Mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
     addQuoteToSchedules: {
-      type: QuoteType,
+      type: GraphQLString,
       args: {
         routeId: {
           type: new GraphQLNonNull(GraphQLString)
@@ -63,18 +63,17 @@ const Mutation = new GraphQLObjectType({
           type: new GraphQLNonNull(QuoteInputType)
         },
       },
-      resolve(parent, args) { 
-        let quote = new Quote(args.quote);
-        return quote.save(function(err, savedQuote) {
-          Route.findOneAndUpdate(
-            { routeId: args.routeId, carrier: args.carrier },
-            { $push: { quoteHistory: savedQuote } },
-            { new: true },
-            function (err, data) {
-              console.log(err);
-            }
-          )
-        });
+      async resolve(parent, args) { 
+        const quote = new Quote(args.quote);
+        const savedQuote = await quote.save();
+        const updatedRoute = await Route.findOneAndUpdate(
+          { routeId: args.routeId, carrier: args.carrier },
+          { $push: { quoteHistory: savedQuote } },
+          { new: true }
+        )
+        if (savedQuote !== null && updatedRoute !== null) {
+          return "OK";
+        }
       }
     },
     createBookingRequestAndInitShipment: {
@@ -127,7 +126,7 @@ const Mutation = new GraphQLObjectType({
       }
     },
     createBookingConfirmation: {
-      type: BookingConfirmationType,
+      type: GraphQLString,
       args: {
         shipmentId: {
           type: new GraphQLNonNull(GraphQLString)
@@ -136,26 +135,25 @@ const Mutation = new GraphQLObjectType({
           type: new GraphQLNonNull(BookingConfirmationInputType)
         }
       },
-      resolve(parent, args) { 
+      async resolve(parent, args) { 
         const bookingConfirmation = new BookingConfirmation(args.bookingConfirmation);
-        return bookingConfirmation.save((err, savedBookingConfirmation) => {
-          Shipment.findOneAndUpdate(
-            {_id: args.shipmentId},
-            { $set: { 
-              "bookingRequest.confirmation": savedBookingConfirmation,
-              "bookingRequest.status": BOOKING_STATUS[1],
-              "billInstruction.status": BOL_STATUS[1]
-            } },
-            { new: true },
-            function (err, data) {
-              console.log(err);
-            }
-          );
-        })
+        const savedBookingConfirmation = await bookingConfirmation.save();
+        const updatedShipment = await Shipment.findOneAndUpdate(
+          {_id: args.shipmentId},
+          { $set: { 
+            "bookingRequest.confirmation": savedBookingConfirmation,
+            "bookingRequest.status": BOOKING_STATUS[1],
+            "billInstruction.status": BOL_STATUS[1]
+          } },
+          { new: true }
+        ).exec();
+        if (savedBookingConfirmation !== null && updatedShipment !== null) {
+          return "OK";
+        }
       }
     },
     createBillInstruction: {
-      type: BillInstructionType,
+      type: GraphQLString,
       args: {
         shipmentId: {
           type: new GraphQLNonNull(GraphQLString)
@@ -164,25 +162,24 @@ const Mutation = new GraphQLObjectType({
           type: new GraphQLNonNull(BillInstructionInputType)
         }
       },
-      resolve(parent, args) { 
+      async resolve(parent, args) { 
         const billInstruction = new BillInstruction(args.billInstruction);
-        return billInstruction.save((err, savedBillInstruction) => {
-          Shipment.findOneAndUpdate(
-            {_id: args.shipmentId},
-            { $set: { 
-              "billInstruction.form": savedBillInstruction,
-              "billInstruction.status": BOL_STATUS[2],
-            } },
-            { new: true },
-            function (err, data) {
-              console.log(err);
-            }
-          );
-        })
+        const savedBillInstruction = await billInstruction.save();
+        const updatedShipment = await Shipment.findOneAndUpdate(
+          {_id: args.shipmentId},
+          { $set: { 
+            "billInstruction.form": savedBillInstruction,
+            "billInstruction.status": BOL_STATUS[2],
+          } },
+          { new: true }
+        ).exec();
+        if (savedBillInstruction !== null && updatedShipment !== null) {
+          return "OK";
+        }
       }
     },
     createBOL: {
-      type: ShipmentType,
+      type: GraphQLString,
       args: {
         shipmentId: {
           type: new GraphQLNonNull(GraphQLString)
@@ -191,22 +188,22 @@ const Mutation = new GraphQLObjectType({
           type: new GraphQLNonNull(GraphQLString)
         },
       },
-      resolve(parent, args) { 
-        return Shipment.findOneAndUpdate(
+      async resolve(parent, args) { 
+        const updatedShipment = await Shipment.findOneAndUpdate(
           {_id: args.shipmentId},
           { $set: { 
             "billInstruction.pdf": args.pdf,
             "billInstruction.status": BOL_STATUS[3],
           } },
-          { new: true },
-          function (err, data) {
-            console.log(err);
-          }
-        );
+          { new: true }
+        ).exec();
+        if (updatedShipment !== null) {
+          return "OK";
+        }
       }
     },
     createInvoice: {
-      type: InvoiceType,
+      type: GraphQLString,
       args: {
         shipmentId: {
           type: new GraphQLNonNull(GraphQLString)
@@ -218,29 +215,27 @@ const Mutation = new GraphQLObjectType({
           type: new GraphQLNonNull(InvoiceInputType)
         }
       },
-      resolve(parent, args) { 
+      async resolve(parent, args) { 
         const invoice = new Invoice(args.invoice);
-        return invoice.save(function(err, savedInvoice) {
-          Shipment.findOneAndUpdate(
-            {_id: args.shipmentId},
-            { $set: { 
-                invoice: { 
-                  form: savedInvoice,
-                  pdf: args.pdf, 
-                  status: INVOICE_STATUS[1],
-                },
-              } 
-            },
-            { new: true },
-            function (err, data) {
-              console.log(err);
-            }
-          );
-        })
+        const savedInvoice = await invoice.save();
+        const updatedShipment = await Shipment.findOneAndUpdate(
+          {_id: args.shipmentId},
+          { $set: { 
+              invoice: { 
+                form: savedInvoice,
+                pdf: args.pdf, 
+                status: INVOICE_STATUS[1],
+              },
+            } 
+          }
+        ).exec();
+        if (savedInvoice !== null && updatedShipment !== null) {
+          return "OK";
+        }
       }
     },
     rollShipment: {
-      type: ShipmentType,
+      type: GraphQLString,
       args: {
         shipmentId: {
           type: new GraphQLNonNull(GraphQLString)
@@ -249,37 +244,39 @@ const Mutation = new GraphQLObjectType({
           type: new GraphQLNonNull(GraphQLString)
         }
       },
-      resolve(parent, args) { 
-        return Shipment.findOneAndUpdate(
+      async resolve(parent, args) { 
+        const updatedShipment = await Shipment.findOneAndUpdate(
           {_id: args.shipmentId},
           { $set: { schedule: mongoose.Types.ObjectId(args.newScheduleId) } },
           { new: true },
-          function (err, data) {
-            console.log(err);
-          }
-        );
+        ).exec();
+
+        if (updatedShipment !== null) {
+          return "OK";
+        }
       }
     },
     cancelShipment: {
-      type: ShipmentType,
+      type: GraphQLString,
       args: {
         shipmentId: {
           type: new GraphQLNonNull(GraphQLString)
         },
       },
-      resolve(parent, args) { 
-        return Shipment.findOneAndUpdate(
+      async resolve(parent, args) { 
+        const updatedShipment = await Shipment.findOneAndUpdate(
           {_id: args.shipmentId},
           { $set: { 
             "bookingRequest.status": BOOKING_STATUS[BOOKING_STATUS.length - 1],
             "billInstruction.status": BOL_STATUS[BOL_STATUS.length - 1],
             "invoice.status": INVOICE_STATUS[INVOICE_STATUS.length - 1],
           } },
-          { new: true },
-          function (err, data) {
-            console.log(err);
-          }
-        );
+          { new: true }
+        ).exec();
+
+        if (updatedShipment !== null ) {
+          return "OK";
+        }
       }
     },
   }
