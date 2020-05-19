@@ -65,12 +65,16 @@ const Mutation = new GraphQLObjectType({
       },
       async resolve(parent, args) { 
         const quote = new Quote(args.quote);
-        const savedQuote = await quote.save();
+        const savedQuote = await quote.save().catch(() => {
+          console.log("addQuoteToSchedules: error in saving quote");
+        });
         const updatedRoute = await Route.findOneAndUpdate(
           { routeId: args.routeId, carrier: args.carrier },
           { $push: { quoteHistory: savedQuote } },
           { new: true }
-        )
+        ).exec().catch(() => {
+          console.log("addQuoteToSchedules: error in adding quote to route");
+        });
         if (savedQuote !== null && updatedRoute !== null) {
           return "OK";
         }
@@ -94,8 +98,12 @@ const Mutation = new GraphQLObjectType({
       },
       async resolve(parent, args) { 
         let bookingRequest = new BookingRequest(args.bookingRequest);
-        const savedBookingRequest = await bookingRequest.save();
-        const foundQuote = await Quote.findById(args.quoteId).exec();
+        const savedBookingRequest = await bookingRequest.save().catch(() => {
+          console.log("createBookingRequestAndInitShipment: error in saving booking request");
+        });
+        const foundQuote = await Quote.findById(args.quoteId).exec().catch(() => {
+          console.log("createBookingRequestAndInitShipment: error in searching quote");
+        });
 
         const shipment = new Shipment({
           schedule: mongoose.Types.ObjectId(args.scheduleId),
@@ -113,12 +121,16 @@ const Mutation = new GraphQLObjectType({
           },
         })
 
-        const savedShipment = await shipment.save();
+        const savedShipment = await shipment.save().catch(() => {
+          console.log("createBookingRequestAndInitShipment: error in saving shipment");
+        });
         const updatedCompany = await Company.findOneAndUpdate(
           { _id: args.companyId },
           { $push: { shipments: savedShipment } },
           { new: true }
-        ).exec();
+        ).exec().catch(() => {
+          console.log("createBookingRequestAndInitShipment: error in adding shipment to company");
+        });
         
         if (savedShipment !== null && updatedCompany !== null) {
           return "OK";
@@ -137,7 +149,9 @@ const Mutation = new GraphQLObjectType({
       },
       async resolve(parent, args) { 
         const bookingConfirmation = new BookingConfirmation(args.bookingConfirmation);
-        const savedBookingConfirmation = await bookingConfirmation.save();
+        const savedBookingConfirmation = await bookingConfirmation.save().catch(() => {
+          console.log("createBookingConfirmation: error in saving booking confirmation");
+        });
         const updatedShipment = await Shipment.findOneAndUpdate(
           {_id: args.shipmentId},
           { $set: { 
@@ -146,7 +160,9 @@ const Mutation = new GraphQLObjectType({
             "billInstruction.status": BOL_STATUS[1]
           } },
           { new: true }
-        ).exec();
+        ).exec().catch(() => {
+          console.log("createBookingConfirmation: error in adding booking confirmation to shipment");
+        });
         if (savedBookingConfirmation !== null && updatedShipment !== null) {
           return "OK";
         }
@@ -164,7 +180,9 @@ const Mutation = new GraphQLObjectType({
       },
       async resolve(parent, args) { 
         const billInstruction = new BillInstruction(args.billInstruction);
-        const savedBillInstruction = await billInstruction.save();
+        const savedBillInstruction = await billInstruction.save().catch(() => {
+          console.log("createBillInstruction: error in saving bill instruction");
+        });
         const updatedShipment = await Shipment.findOneAndUpdate(
           {_id: args.shipmentId},
           { $set: { 
@@ -172,7 +190,9 @@ const Mutation = new GraphQLObjectType({
             "billInstruction.status": BOL_STATUS[2],
           } },
           { new: true }
-        ).exec();
+        ).exec().catch(() => {
+          console.log("createBillInstruction: error in adding bill instruction to shipment");
+        });
         if (savedBillInstruction !== null && updatedShipment !== null) {
           return "OK";
         }
@@ -196,7 +216,9 @@ const Mutation = new GraphQLObjectType({
             "billInstruction.status": BOL_STATUS[3],
           } },
           { new: true }
-        ).exec();
+        ).exec().catch(() => {
+          console.log("createBOL: error in adding BOL link to shipment");
+        });
         if (updatedShipment !== null) {
           return "OK";
         }
@@ -217,7 +239,9 @@ const Mutation = new GraphQLObjectType({
       },
       async resolve(parent, args) { 
         const invoice = new Invoice(args.invoice);
-        const savedInvoice = await invoice.save();
+        const savedInvoice = await invoice.save().catch(() => {
+          console.log("createInvoice: error in saving invoice");
+        });
         const updatedShipment = await Shipment.findOneAndUpdate(
           {_id: args.shipmentId},
           { $set: { 
@@ -228,7 +252,9 @@ const Mutation = new GraphQLObjectType({
               },
             } 
           }
-        ).exec();
+        ).exec().catch(() => {
+          console.log("createInvoice: error in adding invoice to shipment");
+        });
         if (savedInvoice !== null && updatedShipment !== null) {
           return "OK";
         }
@@ -249,7 +275,9 @@ const Mutation = new GraphQLObjectType({
           {_id: args.shipmentId},
           { $set: { schedule: mongoose.Types.ObjectId(args.newScheduleId) } },
           { new: true },
-        ).exec();
+        ).exec().catch(() => {
+          console.log("rollShipment: error in rolling shipment");
+        });
 
         if (updatedShipment !== null) {
           return "OK";
@@ -272,7 +300,9 @@ const Mutation = new GraphQLObjectType({
             "invoice.status": INVOICE_STATUS[INVOICE_STATUS.length - 1],
           } },
           { new: true }
-        ).exec();
+        ).exec().catch(() => {
+          console.log("cancelShipment: error in cancelling shipment");
+        });
 
         if (updatedShipment !== null ) {
           return "OK";
