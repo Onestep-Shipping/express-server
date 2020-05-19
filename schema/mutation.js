@@ -18,6 +18,7 @@ const { BOOKING_STATUS, BOL_STATUS, INVOICE_STATUS } = require('../constants/Sta
 const {
   BillInstructionType,
   BillInstructionInputType,
+  BookingRequestType,
   BookingRequestInputType,
   BookingConfirmationType,
   BookingConfirmationInputType,
@@ -45,6 +46,18 @@ const {
   GraphQLDate,
   GraphQLDateTime
 } = require('graphql-iso-date');
+
+const saveBookingRequest = async (bookingRequest) => { 
+  return await bookingRequest.save();
+}
+
+const saveShipment = async (shipment) => { 
+  return await shipment.save();
+}
+
+const findQuote = async (quoteId) => {
+  return await Quote.findById(quoteId).exec();
+}
 
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
@@ -94,39 +107,65 @@ const Mutation = new GraphQLObjectType({
       },
       resolve(parent, args) { 
         let bookingRequest = new BookingRequest(args.bookingRequest);
-        bookingRequest.save(function(err, savedBookingRequest) {
-          Quote.findById(args.quoteId, function (err, quote) {
-            const shipment = new Shipment({
-              schedule: mongoose.Types.ObjectId(args.scheduleId),
-              bookedBy: mongoose.Types.ObjectId(args.companyId),
-              bookingRequest: {
-                form: savedBookingRequest,
-                status: BOOKING_STATUS[0],
-              },
-              billInstruction: {
-                status: BOL_STATUS[0]
-              },
-              invoice: {
-                status: INVOICE_STATUS[0],
-                tempCost: calculateCost(quote.buying, bookingRequest.containers)
-              },
-            })
-            shipment.save(function(error, result){
-              if (result) {
-                Company.findOneAndUpdate(
-                  { _id: args.args.companyId },
-                  { $push: { shipments: result } },
-                  { new: true },
-                  function (err, data) {
-                    if (data) {
-                      return "OK";
-                    }
-                  }
-                )
-              }
-            });
-          });
-        });
+        const savedBookingRequest = saveBookingRequest(bookingRequest);
+        const foundQuote = findQuote(args.quoteId);
+
+        const shipment = new Shipment({
+          schedule: mongoose.Types.ObjectId(args.scheduleId),
+          bookedBy: mongoose.Types.ObjectId(args.companyId),
+          bookingRequest: {
+            form: savedBookingRequest,
+            status: BOOKING_STATUS[0],
+          },
+          billInstruction: {
+            status: BOL_STATUS[0]
+          },
+          invoice: {
+            status: INVOICE_STATUS[0],
+            tempCost: calculateCost(foundQuote.buying, bookingRequest.containers)
+          },
+        })
+        const savedShipment = saveShipment(shipment);
+        // const foundCompany = await Company.findOneAndUpdate(
+        //   { _id: args.companyId },
+        //   { $push: { shipments: savedShipment } },
+        //   { new: true })
+        
+        // return "OK";
+
+        // bookingRequest.save(function(err, savedBookingRequest) {
+        //   if (err) throw err;
+        //   Quote.findById(args.quoteId, function (err, quote) {
+        //     if (err) throw err;
+        //     const shipment = new Shipment({
+        //       schedule: mongoose.Types.ObjectId(args.scheduleId),
+        //       bookedBy: mongoose.Types.ObjectId(args.companyId),
+        //       bookingRequest: {
+        //         form: savedBookingRequest,
+        //         status: BOOKING_STATUS[0],
+        //       },
+        //       billInstruction: {
+        //         status: BOL_STATUS[0]
+        //       },
+        //       invoice: {
+        //         status: INVOICE_STATUS[0],
+        //         tempCost: calculateCost(quote.buying, bookingRequest.containers)
+        //       },
+        //     })
+        //     shipment.save(function(err, result) {
+        //       if (err) throw err;
+        //       Company.findOneAndUpdate(
+        //         { _id: args.companyId },
+        //         { $push: { shipments: result } },
+        //         { new: true },
+        //         function (err, company) {
+        //           if (err) throw err;
+        //           return "OK";
+        //         }
+        //       )
+        //     });
+        //   });
+        // });
       }
     },
     createBookingConfirmation: {

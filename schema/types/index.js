@@ -22,6 +22,7 @@ module.exports = {
 
   ShipmentType,
   CompanyType,
+  BookingRequestType,
   BookingRequestInputType,
   
   BookingConfirmationType,
