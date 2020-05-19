@@ -47,23 +47,11 @@ const {
   GraphQLDateTime
 } = require('graphql-iso-date');
 
-const saveBookingRequest = async (bookingRequest) => { 
-  return await bookingRequest.save();
-}
-
-const saveShipment = async (shipment) => { 
-  return await shipment.save();
-}
-
-const findQuote = async (quoteId) => {
-  return await Quote.findById(quoteId).exec();
-}
-
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
     addQuoteToSchedules: {
-      type: QuoteType,
+      type: GraphQLString,
       args: {
         routeId: {
           type: new GraphQLNonNull(GraphQLString)
@@ -75,18 +63,21 @@ const Mutation = new GraphQLObjectType({
           type: new GraphQLNonNull(QuoteInputType)
         },
       },
-      resolve(parent, args) { 
-        let quote = new Quote(args.quote);
-        return quote.save(function(err, savedQuote) {
-          Route.findOneAndUpdate(
-            { routeId: args.routeId, carrier: args.carrier },
-            { $push: { quoteHistory: savedQuote } },
-            { new: true },
-            function (err, data) {
-              console.log(err);
-            }
-          )
+      async resolve(parent, args) { 
+        const quote = new Quote(args.quote);
+        const savedQuote = await quote.save().catch(() => {
+          console.log("addQuoteToSchedules: error in saving quote");
         });
+        const updatedRoute = await Route.findOneAndUpdate(
+          { routeId: args.routeId, carrier: args.carrier },
+          { $push: { quoteHistory: savedQuote } },
+          { new: true }
+        ).exec().catch(() => {
+          console.log("addQuoteToSchedules: error in adding quote to route");
+        });
+        if (savedQuote !== null && updatedRoute !== null) {
+          return "OK";
+        }
       }
     },
     createBookingRequestAndInitShipment: {
@@ -105,10 +96,14 @@ const Mutation = new GraphQLObjectType({
           type: new GraphQLNonNull(BookingRequestInputType)
         },
       },
-      resolve(parent, args) { 
+      async resolve(parent, args) { 
         let bookingRequest = new BookingRequest(args.bookingRequest);
-        const savedBookingRequest = saveBookingRequest(bookingRequest);
-        const foundQuote = findQuote(args.quoteId);
+        const savedBookingRequest = await bookingRequest.save().catch(() => {
+          console.log("createBookingRequestAndInitShipment: error in saving booking request");
+        });
+        const foundQuote = await Quote.findById(args.quoteId).exec().catch(() => {
+          console.log("createBookingRequestAndInitShipment: error in searching quote");
+        });
 
         const shipment = new Shipment({
           schedule: mongoose.Types.ObjectId(args.scheduleId),
@@ -125,51 +120,25 @@ const Mutation = new GraphQLObjectType({
             tempCost: calculateCost(foundQuote.buying, bookingRequest.containers)
           },
         })
-        const savedShipment = saveShipment(shipment);
-        // const foundCompany = await Company.findOneAndUpdate(
-        //   { _id: args.companyId },
-        //   { $push: { shipments: savedShipment } },
-        //   { new: true })
-        
-        // return "OK";
 
-        // bookingRequest.save(function(err, savedBookingRequest) {
-        //   if (err) throw err;
-        //   Quote.findById(args.quoteId, function (err, quote) {
-        //     if (err) throw err;
-        //     const shipment = new Shipment({
-        //       schedule: mongoose.Types.ObjectId(args.scheduleId),
-        //       bookedBy: mongoose.Types.ObjectId(args.companyId),
-        //       bookingRequest: {
-        //         form: savedBookingRequest,
-        //         status: BOOKING_STATUS[0],
-        //       },
-        //       billInstruction: {
-        //         status: BOL_STATUS[0]
-        //       },
-        //       invoice: {
-        //         status: INVOICE_STATUS[0],
-        //         tempCost: calculateCost(quote.buying, bookingRequest.containers)
-        //       },
-        //     })
-        //     shipment.save(function(err, result) {
-        //       if (err) throw err;
-        //       Company.findOneAndUpdate(
-        //         { _id: args.companyId },
-        //         { $push: { shipments: result } },
-        //         { new: true },
-        //         function (err, company) {
-        //           if (err) throw err;
-        //           return "OK";
-        //         }
-        //       )
-        //     });
-        //   });
-        // });
+        const savedShipment = await shipment.save().catch(() => {
+          console.log("createBookingRequestAndInitShipment: error in saving shipment");
+        });
+        const updatedCompany = await Company.findOneAndUpdate(
+          { _id: args.companyId },
+          { $push: { shipments: savedShipment } },
+          { new: true }
+        ).exec().catch(() => {
+          console.log("createBookingRequestAndInitShipment: error in adding shipment to company");
+        });
+        
+        if (savedShipment !== null && updatedCompany !== null) {
+          return "OK";
+        }
       }
     },
     createBookingConfirmation: {
-      type: BookingConfirmationType,
+      type: GraphQLString,
       args: {
         shipmentId: {
           type: new GraphQLNonNull(GraphQLString)
@@ -178,26 +147,29 @@ const Mutation = new GraphQLObjectType({
           type: new GraphQLNonNull(BookingConfirmationInputType)
         }
       },
-      resolve(parent, args) { 
+      async resolve(parent, args) { 
         const bookingConfirmation = new BookingConfirmation(args.bookingConfirmation);
-        return bookingConfirmation.save((err, savedBookingConfirmation) => {
-          Shipment.findOneAndUpdate(
-            {_id: args.shipmentId},
-            { $set: { 
-              "bookingRequest.confirmation": savedBookingConfirmation,
-              "bookingRequest.status": BOOKING_STATUS[1],
-              "billInstruction.status": BOL_STATUS[1]
-            } },
-            { new: true },
-            function (err, data) {
-              console.log(err);
-            }
-          );
-        })
+        const savedBookingConfirmation = await bookingConfirmation.save().catch(() => {
+          console.log("createBookingConfirmation: error in saving booking confirmation");
+        });
+        const updatedShipment = await Shipment.findOneAndUpdate(
+          {_id: args.shipmentId},
+          { $set: { 
+            "bookingRequest.confirmation": savedBookingConfirmation,
+            "bookingRequest.status": BOOKING_STATUS[1],
+            "billInstruction.status": BOL_STATUS[1]
+          } },
+          { new: true }
+        ).exec().catch(() => {
+          console.log("createBookingConfirmation: error in adding booking confirmation to shipment");
+        });
+        if (savedBookingConfirmation !== null && updatedShipment !== null) {
+          return "OK";
+        }
       }
     },
     createBillInstruction: {
-      type: BillInstructionType,
+      type: GraphQLString,
       args: {
         shipmentId: {
           type: new GraphQLNonNull(GraphQLString)
@@ -206,25 +178,28 @@ const Mutation = new GraphQLObjectType({
           type: new GraphQLNonNull(BillInstructionInputType)
         }
       },
-      resolve(parent, args) { 
+      async resolve(parent, args) { 
         const billInstruction = new BillInstruction(args.billInstruction);
-        return billInstruction.save((err, savedBillInstruction) => {
-          Shipment.findOneAndUpdate(
-            {_id: args.shipmentId},
-            { $set: { 
-              "billInstruction.form": savedBillInstruction,
-              "billInstruction.status": BOL_STATUS[2],
-            } },
-            { new: true },
-            function (err, data) {
-              console.log(err);
-            }
-          );
-        })
+        const savedBillInstruction = await billInstruction.save().catch(() => {
+          console.log("createBillInstruction: error in saving bill instruction");
+        });
+        const updatedShipment = await Shipment.findOneAndUpdate(
+          {_id: args.shipmentId},
+          { $set: { 
+            "billInstruction.form": savedBillInstruction,
+            "billInstruction.status": BOL_STATUS[2],
+          } },
+          { new: true }
+        ).exec().catch(() => {
+          console.log("createBillInstruction: error in adding bill instruction to shipment");
+        });
+        if (savedBillInstruction !== null && updatedShipment !== null) {
+          return "OK";
+        }
       }
     },
     createBOL: {
-      type: ShipmentType,
+      type: GraphQLString,
       args: {
         shipmentId: {
           type: new GraphQLNonNull(GraphQLString)
@@ -233,22 +208,24 @@ const Mutation = new GraphQLObjectType({
           type: new GraphQLNonNull(GraphQLString)
         },
       },
-      resolve(parent, args) { 
-        return Shipment.findOneAndUpdate(
+      async resolve(parent, args) { 
+        const updatedShipment = await Shipment.findOneAndUpdate(
           {_id: args.shipmentId},
           { $set: { 
             "billInstruction.pdf": args.pdf,
             "billInstruction.status": BOL_STATUS[3],
           } },
-          { new: true },
-          function (err, data) {
-            console.log(err);
-          }
-        );
+          { new: true }
+        ).exec().catch(() => {
+          console.log("createBOL: error in adding BOL link to shipment");
+        });
+        if (updatedShipment !== null) {
+          return "OK";
+        }
       }
     },
     createInvoice: {
-      type: InvoiceType,
+      type: GraphQLString,
       args: {
         shipmentId: {
           type: new GraphQLNonNull(GraphQLString)
@@ -260,29 +237,31 @@ const Mutation = new GraphQLObjectType({
           type: new GraphQLNonNull(InvoiceInputType)
         }
       },
-      resolve(parent, args) { 
+      async resolve(parent, args) { 
         const invoice = new Invoice(args.invoice);
-        return invoice.save(function(err, savedInvoice) {
-          Shipment.findOneAndUpdate(
-            {_id: args.shipmentId},
-            { $set: { 
-                invoice: { 
-                  form: savedInvoice,
-                  pdf: args.pdf, 
-                  status: INVOICE_STATUS[1],
-                },
-              } 
-            },
-            { new: true },
-            function (err, data) {
-              console.log(err);
-            }
-          );
-        })
+        const savedInvoice = await invoice.save().catch(() => {
+          console.log("createInvoice: error in saving invoice");
+        });
+        const updatedShipment = await Shipment.findOneAndUpdate(
+          {_id: args.shipmentId},
+          { $set: { 
+              invoice: { 
+                form: savedInvoice,
+                pdf: args.pdf, 
+                status: INVOICE_STATUS[1],
+              },
+            } 
+          }
+        ).exec().catch(() => {
+          console.log("createInvoice: error in adding invoice to shipment");
+        });
+        if (savedInvoice !== null && updatedShipment !== null) {
+          return "OK";
+        }
       }
     },
     rollShipment: {
-      type: ShipmentType,
+      type: GraphQLString,
       args: {
         shipmentId: {
           type: new GraphQLNonNull(GraphQLString)
@@ -291,37 +270,43 @@ const Mutation = new GraphQLObjectType({
           type: new GraphQLNonNull(GraphQLString)
         }
       },
-      resolve(parent, args) { 
-        return Shipment.findOneAndUpdate(
+      async resolve(parent, args) { 
+        const updatedShipment = await Shipment.findOneAndUpdate(
           {_id: args.shipmentId},
           { $set: { schedule: mongoose.Types.ObjectId(args.newScheduleId) } },
           { new: true },
-          function (err, data) {
-            console.log(err);
-          }
-        );
+        ).exec().catch(() => {
+          console.log("rollShipment: error in rolling shipment");
+        });
+
+        if (updatedShipment !== null) {
+          return "OK";
+        }
       }
     },
     cancelShipment: {
-      type: ShipmentType,
+      type: GraphQLString,
       args: {
         shipmentId: {
           type: new GraphQLNonNull(GraphQLString)
         },
       },
-      resolve(parent, args) { 
-        return Shipment.findOneAndUpdate(
+      async resolve(parent, args) { 
+        const updatedShipment = await Shipment.findOneAndUpdate(
           {_id: args.shipmentId},
           { $set: { 
             "bookingRequest.status": BOOKING_STATUS[BOOKING_STATUS.length - 1],
             "billInstruction.status": BOL_STATUS[BOL_STATUS.length - 1],
             "invoice.status": INVOICE_STATUS[INVOICE_STATUS.length - 1],
           } },
-          { new: true },
-          function (err, data) {
-            console.log(err);
-          }
-        );
+          { new: true }
+        ).exec().catch(() => {
+          console.log("cancelShipment: error in cancelling shipment");
+        });
+
+        if (updatedShipment !== null ) {
+          return "OK";
+        }
       }
     },
   }
