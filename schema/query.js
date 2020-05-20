@@ -44,29 +44,22 @@ const RootQuery = new GraphQLObjectType({
       }
     },
     getMyShipments: {
-      type: CompanyType,
+      type: new GraphQLList(ShipmentType),
       args: {
         companyId: {
           type: new GraphQLNonNull(GraphQLString)
         }
       },
       async resolve(parent, args) {
-        return Company.findById(args.companyId)
+        return Shipment.find({ bookedBy: args.companyId })
           .populate({ 
-            path: 'shipments',
+            path: 'schedule',
             populate: {
-              path: 'schedule',
-              populate: {
-                path: 'route',
-              }
-            } 
+              path: 'route',
+            }
           })
-          .populate({ 
-            path: 'shipments',
-            populate: {
-              path: 'bookingRequest.confirmation',
-            } 
-          })
+          .populate('bookingRequest.confirmation')
+          .sort({ "createdAt": -1})
       }
     },
     getBillForm: {
