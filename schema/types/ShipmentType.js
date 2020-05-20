@@ -71,7 +71,7 @@ const BillInstructionDataType = new GraphQLObjectType({
       type: new GraphQLNonNull(BillInstructionType)
     },
     pdf: {
-      type: new GraphQLNonNull(GraphQLString)
+      type: GraphQLString
     },
     status: {
       type: new GraphQLNonNull(GraphQLString)
@@ -86,7 +86,7 @@ const InvoiceDataType = new GraphQLObjectType({
       type: new GraphQLNonNull(InvoiceType)
     },
     pdf: {
-      type: new GraphQLNonNull(GraphQLString)
+      type: GraphQLString
     },
     tempCost: {
       type: new GraphQLNonNull(GraphQLFloat)

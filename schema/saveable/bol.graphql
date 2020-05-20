@@ -1,17 +1,6 @@
 mutation {
   createBOL(
     shipmentId: "5ebb1425e9a544cef2d0c8d6",
-    pdf: "./files/BOL #1232154.pdf"
-  ) {
-    schedule {
-      route {
-        startLocation, endLocation, carrier
-      }
-      startDate, 
-      endDate, 
-      transitTime, 
-      transshipment, 
-      vessels
-    }
-  }
+    pdf: "./files/bol1232154.pdf"
+  )
 }

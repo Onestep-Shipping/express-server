@@ -21,7 +21,7 @@ const BookingConfirmationType = new GraphQLObjectType({
       type: new GraphQLNonNull(GraphQLInt)
     },
     pdf: {
-      type: new GraphQLNonNull(GraphQLString)
+      type: GraphQLString
     },
     bookingNo: {
       type: new GraphQLNonNull(GraphQLString)
