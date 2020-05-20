@@ -36,7 +36,8 @@ app.use('/graphql', graphqlHTTP({
   schema: Schema,
   graphiql: true,
 }));
-app.use('/upload', require('./schema/upload'));
+app.use('/', require('./schema/upload'));
+app.use(express.static('public')); 
 
 const PORT = process.env.PORT || 5000;
 

@@ -6,13 +6,15 @@ const Schedule = require('../models/Schedule');
 const Shipment = require('../models/Shipment');
 const Company = require('../models/Company');
 const BookingRequest = require('../models/BookingRequest');
+const BillInstruction = require('../models/BillInstruction');
 
 const { 
   RouteType,
   QuoteType,
   ScheduleType,
   ShipmentType,
-  CompanyType
+  CompanyType,
+  BillInstructionType,
 } = require('./types/index.js');
 
 const {
@@ -48,7 +50,7 @@ const RootQuery = new GraphQLObjectType({
           type: new GraphQLNonNull(GraphQLString)
         }
       },
-      resolve(parent, args) {
+      async resolve(parent, args) {
         return Company.findById(args.companyId)
           .populate({ 
             path: 'shipments',
@@ -59,6 +61,26 @@ const RootQuery = new GraphQLObjectType({
               }
             } 
           })
+          .populate({ 
+            path: 'shipments',
+            populate: {
+              path: 'bookingRequest.confirmation',
+            } 
+          })
+      }
+    },
+    getBillForm: {
+      type: BillInstructionType,
+      args: {
+        shipmentId: {
+          type: new GraphQLNonNull(GraphQLString)
+        }
+      },
+      async resolve(parent, args) {
+        const foundShipment = await Shipment.findById(args.shipmentId)
+          .populate('billInstruction.form')
+          .exec();
+        return foundShipment.billInstruction.form;
       }
     },
     getQuoteHistory: {

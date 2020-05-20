@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('/', (req, res) => {
+router.post('/upload', (req, res) => {
   const { file } = req.files;
-  const fileLocation = './files/' + file.name;
+  filename = encodeURIComponent(file.name);
+  const fileLocation = './files/' + filename;
   file.mv(fileLocation, (err) => {
     if (!err) {
       res.send({ fileLocation });
@@ -11,6 +12,12 @@ router.post('/', (req, res) => {
       console.log(err);
     }
   });
+});
+
+router.get('/download', (req, res) => {
+  let { url } = req.query;
+  res.contentType("application/pdf");
+  res.download(url);
 });
 
 module.exports = router; 

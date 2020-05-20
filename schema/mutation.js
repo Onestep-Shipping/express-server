@@ -190,7 +190,7 @@ const Mutation = new GraphQLObjectType({
             "billInstruction.status": BOL_STATUS[2],
           } },
           { new: true }
-        ).exec().catch(() => {
+        ).catch(() => {
           console.log("createBillInstruction: error in adding bill instruction to shipment");
         });
         if (savedBillInstruction !== null && updatedShipment !== null) {
