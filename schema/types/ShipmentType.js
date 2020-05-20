@@ -25,6 +25,9 @@ const InvoiceType = require('./InvoiceType');
 const ShipmentType = new GraphQLObjectType({
   name: 'ShipmentType',
   fields: () => ({
+    _id: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
     schedule: {
       type: new GraphQLNonNull(ScheduleType)
     },
