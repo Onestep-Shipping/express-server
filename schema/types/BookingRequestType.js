@@ -32,7 +32,7 @@ const BookingRequestType = new GraphQLObjectType({
     autoFilling: {
       type: new GraphQLNonNull(GraphQLBoolean)
     },
-    createdAt: {
+    updatedAt: {
       type: new GraphQLNonNull(GraphQLDateTime)
     }
   })

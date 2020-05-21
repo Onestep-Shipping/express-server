@@ -96,7 +96,7 @@ query {
         containers {
           containerType, quantity
         },
-        paymentTerm, autoFilling, createdAt
+        paymentTerm, autoFilling, updatedAt
       }, 
       status
     },
@@ -146,7 +146,7 @@ query {
         hsCode,
         caedNo,
         cargoValue,
-        createdAt
+        updatedAt
       }
       status
     }

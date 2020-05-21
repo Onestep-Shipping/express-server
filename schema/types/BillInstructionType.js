@@ -45,7 +45,7 @@ const BillInstructionType = new GraphQLObjectType({
     cargoValue: {
       type: new GraphQLNonNull(GraphQLString)
     },
-    createdAt: {
+    updatedAt: {
       type: new GraphQLNonNull(GraphQLDateTime)
     }
   })

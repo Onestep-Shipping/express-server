@@ -43,7 +43,7 @@ const ShipmentType = new GraphQLObjectType({
     invoice: {
       type: new GraphQLNonNull(InvoiceDataType)
     },
-    createdAt: {
+    updatedAt: {
       type: new GraphQLNonNull(GraphQLDateTime)
     }
   })
@@ -68,7 +68,7 @@ const BillInstructionDataType = new GraphQLObjectType({
   name: 'BillInstructionDataType',
   fields: () => ({
     form: {
-      type: new GraphQLNonNull(BillInstructionType)
+      type: BillInstructionType
     },
     pdf: {
       type: GraphQLString
@@ -83,13 +83,13 @@ const InvoiceDataType = new GraphQLObjectType({
   name: 'InvoiceDataType',
   fields: () => ({
     form: {
-      type: new GraphQLNonNull(InvoiceType)
+      type: InvoiceType
     },
     pdf: {
       type: GraphQLString
     },
     tempCost: {
-      type: new GraphQLNonNull(GraphQLFloat)
+      type: GraphQLFloat
     },
     status: {
       type: new GraphQLNonNull(GraphQLString)

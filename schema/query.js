@@ -59,7 +59,7 @@ const RootQuery = new GraphQLObjectType({
             }
           })
           .populate('bookingRequest.confirmation')
-          .sort({ "createdAt": -1})
+          .sort({ "updatedAt": -1})
       }
     },
     getBillForm: {
@@ -161,6 +161,7 @@ const RootQuery = new GraphQLObjectType({
           .populate('bookingRequest.form')
           .populate('bookingRequest.confirmation')
           .populate('billInstruction.form')
+          .populate('invoice.form')
           .sort({ [args.sortBy + ".form"]: -1 })
           .exec();
       }
