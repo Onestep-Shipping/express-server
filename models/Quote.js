@@ -26,6 +26,7 @@ const QuoteSchema = new mongoose.Schema({
     type: priceSubSchema,
     required: true,
   },
+  except: String
 });
 
 const Quote = mongoose.model('Quote', QuoteSchema);

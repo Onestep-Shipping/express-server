@@ -40,7 +40,7 @@ const RootQuery = new GraphQLObjectType({
     getAllCompanies: {
       type: new GraphQLList(CompanyType),
       resolve(parent, args) {
-        return Company.find({});
+        return Company.find({}).populate("shipments");
       }
     },
     getMyShipments: {
@@ -161,7 +161,8 @@ const RootQuery = new GraphQLObjectType({
           .populate('bookingRequest.form')
           .populate('bookingRequest.confirmation')
           .populate('billInstruction.form')
-          .sort({ [args.sortBy + ".createdAt"]: 1 });
+          .sort({ [args.sortBy + ".form"]: -1 })
+          .exec();
       }
     },
   }

@@ -3,8 +3,7 @@ const router = express.Router();
 
 router.post('/upload', (req, res) => {
   const { file } = req.files;
-  filename = encodeURIComponent(file.name);
-  const fileLocation = './files/' + filename;
+  const fileLocation = './files/' + file.name;
   file.mv(fileLocation, (err) => {
     if (!err) {
       res.send({ fileLocation });
