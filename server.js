@@ -5,6 +5,7 @@ const fileUpload = require('express-fileupload');
 const graphqlHTTP = require('express-graphql');
 const { buildSchema } = require('graphql');
 const Schema = require('./schema/schema');
+const path = require('path');
 
 const app = express();
 app.use(fileUpload());
@@ -37,7 +38,8 @@ app.use('/graphql', graphqlHTTP({
   graphiql: true,
 }));
 app.use('/', require('./schema/upload'));
-app.use(express.static('public')); 
+
+app.use(express.static(path.join(__dirname, "../client/build")));
 
 const PORT = process.env.PORT || 5000;
 
